@@ -1,0 +1,59 @@
+{
+  "name": "time-observer",
+  "version": "0.0.1",
+  "description": "A notifier for web usages",
+  "main": "dist/index.js",
+  "scripts": {
+    "lint": "eslint --ext .ts,.tsx .",
+    "lint:fix": "eslint --ext .ts,.tsx --fix .",
+    "format": "prettier --write .",
+    "dev": "webpack --watch --config webpack.dev.js",
+    "build": "webpack --config webpack.prod.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/seiwon-yaehee/time-observer.git"
+  },
+  "keywords": [
+    "notification",
+    "notifier",
+    "chrome-extension",
+    "time",
+    "tracking",
+    "tracker",
+    "usage"
+  ],
+  "authors": [
+    "Seiwon Park <psw7347@gmail.com>",
+    "Yaehee Choe <yaehee@kakao.com>"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/seiwon-yaehee/time-observer/issues"
+  },
+  "homepage": "https://github.com/seiwon-yaehee/time-observer#readme",
+  "dependencies": {
+    "copy-webpack-plugin": "^11.0.0",
+    "css-loader": "^6.8.1",
+    "mini-css-extract-plugin": "^2.7.6",
+    "node-polyfill-webpack-plugin": "^2.0.1",
+    "styled-components": "^6.0.4",
+    "webpack": "^5.88.2",
+    "webpack-cli": "^5.1.4",
+    "webpack-merge": "^5.9.0"
+  },
+  "devDependencies": {
+    "@types/eslint": "^8.44.0",
+    "@types/glob": "^8.1.0",
+    "@types/styled-components": "^5.1.26",
+    "@typescript-eslint/eslint-plugin": "^6.1.0",
+    "@typescript-eslint/parser": "^6.1.0",
+    "eslint": "^8.45.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-react": "^7.33.0",
+    "prettier": "^2.8.8",
+    "swc-loader": "^0.2.3",
+    "typescript": "^5.1.6"
+  }
+}
