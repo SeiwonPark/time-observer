@@ -13,6 +13,7 @@ module.exports = {
   env: {
     jest: true,
     browser: true,
+    webextensions: true,
   },
   globals: {
     document: false,
@@ -24,7 +25,10 @@ module.exports = {
   },
   plugins: ['@typescript-eslint', 'react', 'eslint-plugin-prettier'],
   rules: {
+    /* Warns */
     'prettier/prettier': 'warn',
+    'no-unused-vars': 'warn',
+    /* Errors */
     indent: ['error', 2],
     'linebreak-style': ['error', 'unix'],
     quotes: ['error', 'single'],
