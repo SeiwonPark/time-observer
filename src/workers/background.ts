@@ -12,7 +12,10 @@ async function getCurrentTabInfo() {
       if (domain.includes('www.youtube.com')) {
         initialTimes[domain] = new Date().getTime()
       } else {
-        await saveTime('www.youtube.com')
+        if (initialTimes['www.youtube.com'] !== 0) {
+          await saveTime('www.youtube.com')
+        }
+        initialTimes['www.youtube.com'] = 0
       }
     }
   } catch (error) {
