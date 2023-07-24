@@ -1,4 +1,4 @@
-let initialTimes: InitialTimes = {}
+const initialTimes: InitialTimes = {}
 
 chrome.tabs.onActivated.addListener(getCurrentTabInfo)
 
