@@ -9,7 +9,7 @@
     "format": "prettier --write .",
     "dev:node": "ts-node ./src/workers/background.ts",
     "dev:build": "webpack --watch --config webpack.dev.js",
-    "dev": "webpack serve --open --config webpack.dev.js",
+    "dev": "npm run build && webpack serve --open --config webpack.dev.js",
     "build": "webpack --config webpack.prod.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -49,6 +49,7 @@
     "webpack-merge": "^5.9.0"
   },
   "devDependencies": {
+    "@types/chrome": "^0.0.241",
     "@types/eslint": "^8.44.0",
     "@types/glob": "^8.1.0",
     "@types/node": "^20.4.3",
