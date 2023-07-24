@@ -41,9 +41,9 @@ async function getDomainNameFromUrl(url: string): Promise<string> {
 }
 
 /**
- * Saves time when the currently active tab's domain address is changed
+ * Saves time when the currently active tab's domain address is changed.
  *
- * `storage.local` can store up to 10MB. (5MB before Chrome 114)
+ * `storage.local` can store up to 10MB (5MB before Chrome 114)
  * but can be increased by requesting the "unlimitedStorage" permission.
  * See {@link https://developer.chrome.com/docs/extensions/reference/storage/#storage-areas}
  */
