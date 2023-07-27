@@ -6,9 +6,21 @@ const Container = styled.div`
   height: 500px;
 `
 
+const CardList = styled.ul`
+  list-style-type: none;
+  padding-left: 0;
+`
+
+const Card = styled.li`
+  margin: 2px 2px;
+  padding: 1em;
+  border: 1px solid #cacaca;
+  border-radius: 8px;
+`
+
 export default function App() {
   const [currentURL, setCurrentURL] = useState<string>()
-  const [youtube, setYoutube] = useState<number>(0)
+  const [storageData, setStorageData] = useState<StorageData>({})
 
   useEffect(() => {
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
@@ -17,18 +29,23 @@ export default function App() {
   }, [])
 
   useEffect(() => {
-    // FIXME: this only tracks www.youtube.com
-    chrome.storage.local.get(['www.youtube.com'], (result) => {
-      setYoutube(result['www.youtube.com'] || 0)
+    chrome.storage.local.get(null, (result) => {
+      setStorageData(result)
     })
-  }, [youtube])
+  }, [])
 
   return (
     <Container>
-      <ul>
-        <li>Current URL: {currentURL}</li>
-        <li>Time spent on YouTube: {youtube} seconds</li>
-      </ul>
+      <div>Current URL: {currentURL}</div>
+      <div>Time spent:</div>
+      <CardList>
+        {Object.entries(storageData).map(([key, value]) => (
+          <Card key={key}>
+            <img src={value.favicon} alt="Favicon" width="30" />
+            {key}: {value.timeSpent} seconds
+          </Card>
+        ))}
+      </CardList>
     </Container>
   )
 }

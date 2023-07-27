@@ -1,27 +1,25 @@
 const initialTimes: InitialTimes = {}
 
-chrome.tabs.onActivated.addListener(getCurrentTabInfo)
+chrome.tabs.onActivated.addListener(initObserve)
 
-async function getCurrentTabInfo() {
+async function initObserve() {
   try {
-    const tabInfo = await chrome.tabs.query({ active: true, currentWindow: true })
-    const domain = await getDomainNameFromUrl(tabInfo[0].url!)
+    const currentTabInfo = await getCurrentTabInfo()
+    const domain = await getDomainNameFromUrl(currentTabInfo.url!)
+    const favicon = currentTabInfo.favIconUrl!
 
     if (domain) {
-      // FIXME: this only tracks 'www.youtube.com'
-      if (domain.includes('www.youtube.com')) {
-        initialTimes[domain] = new Date().getTime()
-      } else {
-        if (initialTimes['www.youtube.com'] !== 0) {
-          await saveTime('www.youtube.com')
-        }
-        initialTimes['www.youtube.com'] = 0
-      }
+      await saveTime(domain, favicon)
     }
   } catch (error) {
     // FIXME: Need to send error log
     console.log('An error occured')
   }
+}
+
+async function getCurrentTabInfo(): Promise<chrome.tabs.Tab> {
+  const tabList = await chrome.tabs.query({ active: true, currentWindow: true })
+  return tabList[0]
 }
 
 /**
@@ -50,9 +48,34 @@ async function getDomainNameFromUrl(url: string): Promise<string> {
  * but can be increased by requesting the "unlimitedStorage" permission.
  * See {@link https://developer.chrome.com/docs/extensions/reference/storage/#storage-areas}
  */
-async function saveTime(key: string) {
+async function saveTime(key: string, favicon: string): Promise<void> {
+  for (let k in initialTimes) {
+    if (initialTimes.hasOwnProperty(k) && initialTimes[k] !== undefined && initialTimes[k] !== 0) {
+      const data = await chrome.storage.local.get([k])
+      const previousData = data[k] !== undefined ? data[k] : { timeSpent: 0, favicon: '' }
+
+      const timeSpent = (new Date().getTime() - initialTimes[k]) / 1000
+      await chrome.storage.local.set({
+        [k]: {
+          timeSpent: timeSpent + previousData.timeSpent,
+          favicon: previousData.favicon,
+        },
+      })
+      initialTimes[k] = 0
+    }
+  }
+  initialTimes[key] = new Date().getTime()
+  await initializeFavicon(key, favicon)
+}
+
+async function initializeFavicon(key: string, favicon: string): Promise<void> {
   const data = await chrome.storage.local.get([key])
-  const timeSpent = (new Date().getTime() - initialTimes[key]) / 1000
-  const previousTime = data[key] || 0
-  await chrome.storage.local.set({ [key]: timeSpent + previousTime })
+  if (data[key] === undefined || data[key].favicon === '') {
+    await chrome.storage.local.set({
+      [key]: {
+        timeSpent: 0,
+        favicon: favicon,
+      },
+    })
+  }
 }
