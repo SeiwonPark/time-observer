@@ -41,7 +41,7 @@ export default function App() {
       <CardList>
         {Object.entries(storageData).map(([key, value]) => (
           <Card key={key}>
-            <img src={value.favicon} alt="Favicon" width="30" />
+            <img src={value.favicon} alt="favicon" width="30" />
             {key}: {value.timeSpent} seconds
           </Card>
         ))}
