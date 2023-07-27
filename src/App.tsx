@@ -11,15 +11,14 @@ export default function App() {
   const [youtube, setYoutube] = useState<number>(0)
 
   useEffect(() => {
-    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
       setCurrentURL(tabs[0].url)
     })
   }, [])
 
   useEffect(() => {
     // FIXME: this only tracks www.youtube.com
-    chrome.storage.local.get(['www.youtube.com'], function (result) {
-      console.log(result)
+    chrome.storage.local.get(['www.youtube.com'], (result) => {
       setYoutube(result['www.youtube.com'] || 0)
     })
   }, [youtube])
