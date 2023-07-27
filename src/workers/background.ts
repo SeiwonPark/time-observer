@@ -2,6 +2,10 @@ const initialTimes: InitialTimes = {}
 
 chrome.tabs.onActivated.addListener(initObserve)
 
+/**
+ * An entry point of 'tabs.onActivated' listener. This will observe
+ * all tabs to track each tab usages while it's been activated.
+ */
 async function initObserve() {
   try {
     const currentTabInfo = await getCurrentTabInfo()
@@ -17,6 +21,10 @@ async function initObserve() {
   }
 }
 
+/**
+ * Get currently active tab's informations.
+ * @returns {Promise<chrome.tabs.Tab>} All tab informations
+ */
 async function getCurrentTabInfo(): Promise<chrome.tabs.Tab> {
   const tabList = await chrome.tabs.query({ active: true, currentWindow: true })
   return tabList[0]
@@ -47,6 +55,9 @@ async function getDomainNameFromUrl(url: string): Promise<string> {
  * `storage.local` can store up to 10MB (5MB before Chrome 114)
  * but can be increased by requesting the "unlimitedStorage" permission.
  * See {@link https://developer.chrome.com/docs/extensions/reference/storage/#storage-areas}
+ *
+ * @param {string} key Domain name
+ * @param {string} favicon Favicon URL
  */
 async function saveTime(key: string, favicon: string): Promise<void> {
   for (let k in initialTimes) {
@@ -68,6 +79,11 @@ async function saveTime(key: string, favicon: string): Promise<void> {
   await initializeFavicon(key, favicon)
 }
 
+/**
+ * Sets favicon url only if it's not set.
+ * @param {string} key Domain name
+ * @param {string} favicon Favicon URL
+ */
 async function initializeFavicon(key: string, favicon: string): Promise<void> {
   const data = await chrome.storage.local.get([key])
   if (data[key] === undefined || data[key].favicon === '') {
