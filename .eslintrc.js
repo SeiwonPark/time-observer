@@ -3,7 +3,7 @@ module.exports = {
     browser: true,
     es2021: true,
   },
-  extends: ['eslint:recommended', 'plugin:react/recommended'],
+  extends: ['eslint:recommended', 'plugin:react/recommended', 'plugin:@typescript-eslint/recommended'],
   overrides: [],
   parser: '@typescript-eslint/parser',
   parserOptions: {
@@ -13,6 +13,7 @@ module.exports = {
   env: {
     jest: true,
     browser: true,
+    webextensions: true,
   },
   globals: {
     document: false,
@@ -24,7 +25,11 @@ module.exports = {
   },
   plugins: ['@typescript-eslint', 'react', 'eslint-plugin-prettier'],
   rules: {
+    /* Warns */
     'prettier/prettier': 'warn',
+    'no-unused-vars': 'warn',
+    '@typescript-eslint/no-unused-vars': 'warn',
+    /* Errors */
     indent: ['error', 2],
     'linebreak-style': ['error', 'unix'],
     quotes: ['error', 'single'],
