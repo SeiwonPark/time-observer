@@ -13,6 +13,9 @@ const Container = styled.div`
 const CardList = styled.ul`
   list-style-type: none;
   padding-left: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 33%);
+  grid-template-rows: repeat(3, auto);
 `
 const Card = styled.li`
   margin: 8px 4px;
@@ -20,8 +23,12 @@ const Card = styled.li`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-direction: column;
   border-radius: 8px;
   box-shadow: ${COLORS.box_shadow01};
+`
+const Pad2 = styled.div`
+  padding: 2px;
 `
 
 export default function App() {
@@ -49,7 +56,8 @@ export default function App() {
           {Object.entries(storageData).map(([key, value]) => (
             <Card key={key}>
               <img src={value.favicon} alt="favicon" width="30" />
-              {key}: {value.timeSpent} seconds
+              <Pad2>{key}</Pad2>
+              <Pad2>{value.timeSpent} seconds</Pad2>
             </Card>
           ))}
         </CardList>
