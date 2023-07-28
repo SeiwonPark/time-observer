@@ -10,8 +10,6 @@
     "format": "prettier --write .",
     "dev:node": "ts-node ./src/workers/background.ts",
     "build": "vite build && node ./src/utils/manifest-generator.js",
-    "dev": "npm run build && vite",
-    "preview": "vite preview",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
