@@ -25,6 +25,7 @@ const Card = styled.li`
   align-items: center;
   flex-direction: column;
   border-radius: 8px;
+
   box-shadow: ${COLORS.box_shadow01};
   &:hover {
     box-shadow: ${COLORS.box_shadow02};
