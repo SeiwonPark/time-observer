@@ -32,6 +32,17 @@ export default function App() {
     chrome.storage.local.get(null, (result) => {
       setStorageData(result)
     })
+
+    const onChange = (_: { [key: string]: chrome.storage.StorageChange }) => {
+      chrome.storage.local.get(null, (result) => {
+        setStorageData(result)
+      })
+    }
+    chrome.storage.onChanged.addListener(onChange)
+
+    return () => {
+      chrome.storage.onChanged.removeListener(onChange)
+    }
   }, [])
 
   return (
