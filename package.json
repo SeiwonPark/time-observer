@@ -3,14 +3,15 @@
   "version": "0.0.1",
   "description": "A notifier for web usages",
   "main": "dist/index.js",
+  "type": "module",
   "scripts": {
     "lint": "eslint --ext .ts,.tsx .",
     "lint:fix": "eslint --ext .ts,.tsx --fix .",
     "format": "prettier --write .",
     "dev:node": "ts-node ./src/workers/background.ts",
-    "dev:build": "webpack --watch --config webpack.dev.js",
-    "dev": "npm run build && webpack serve --open --config webpack.dev.js",
-    "build": "webpack --config webpack.prod.js",
+    "build": "vite build && node ./src/utils/manifest-generator.js",
+    "dev": "npm run build && vite",
+    "preview": "vite preview",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -36,6 +37,7 @@
   },
   "homepage": "https://github.com/seiwon-yaehee/time-observer#readme",
   "dependencies": {
+    "@vitejs/plugin-react-refresh": "^1.3.6",
     "copy-webpack-plugin": "^11.0.0",
     "css-loader": "^6.8.1",
     "mini-css-extract-plugin": "^2.7.6",
@@ -43,6 +45,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "styled-components": "^6.0.4",
+    "vite-tsconfig-paths": "^4.2.0",
     "webpack": "^5.88.2",
     "webpack-cli": "^5.1.4",
     "webpack-dev-server": "^4.15.1",
@@ -58,12 +61,14 @@
     "@types/styled-components": "^5.1.26",
     "@typescript-eslint/eslint-plugin": "^6.1.0",
     "@typescript-eslint/parser": "^6.1.0",
+    "@vitejs/plugin-react": "^4.0.3",
     "eslint": "^8.45.0",
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-react": "^7.33.0",
     "prettier": "^2.8.8",
     "swc-loader": "^0.2.3",
     "ts-node": "^10.9.1",
-    "typescript": "^5.1.6"
+    "typescript": "^5.1.6",
+    "vite": "^4.4.7"
   }
 }
