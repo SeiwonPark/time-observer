@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
+import { COLORS } from './styles/colors'
 
+const Margin4 = styled.div`
+  margin: 4px;
+`
 const Container = styled.div`
   width: 500px;
   height: 500px;
@@ -10,12 +14,14 @@ const CardList = styled.ul`
   list-style-type: none;
   padding-left: 0;
 `
-
 const Card = styled.li`
-  margin: 2px 2px;
+  margin: 8px 4px;
   padding: 1em;
-  border: 1px solid #cacaca;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   border-radius: 8px;
+  box-shadow: ${COLORS.box_shadow01};
 `
 
 export default function App() {
@@ -36,16 +42,18 @@ export default function App() {
 
   return (
     <Container>
-      <div>Current URL: {currentURL}</div>
-      <div>Time spent:</div>
-      <CardList>
-        {Object.entries(storageData).map(([key, value]) => (
-          <Card key={key}>
-            <img src={value.favicon} alt="favicon" width="30" />
-            {key}: {value.timeSpent} seconds
-          </Card>
-        ))}
-      </CardList>
+      <Margin4>
+        <div>Current URL: {currentURL}</div>
+        <div>Time spent:</div>
+        <CardList>
+          {Object.entries(storageData).map(([key, value]) => (
+            <Card key={key}>
+              <img src={value.favicon} alt="favicon" width="30" />
+              {key}: {value.timeSpent} seconds
+            </Card>
+          ))}
+        </CardList>
+      </Margin4>
     </Container>
   )
 }
