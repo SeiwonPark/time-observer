@@ -80,7 +80,7 @@ async function saveTime(key: string, favicon: string, second: number): Promise<v
  * @returns {string} Domain name
  */
 async function getDomainNameFromUrl(url: string): Promise<string> {
-  const match = url.match(/:\/\/(.[^/]+)/)
+  const match = url.match(/:\/\/(?:www\.)?(.[^/]+)/)
   return match ? match[1] : ''
 }
 
