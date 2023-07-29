@@ -3,7 +3,7 @@ import React, { useCallback, useEffect, useState } from 'react'
 import styled from 'styled-components'
 
 import { COLORS } from '../styles/colors'
-import { sortByTimeSpent } from '../utils'
+import { sortByTimeSpent, formatTime } from '../utils'
 
 const Margin4 = styled.div`
   margin: 4px;
@@ -75,7 +75,7 @@ export default function DailyUsage() {
           <Card key={key}>
             <img src={value.favicon} alt="favicon" width="30" />
             <Pad2>{key}</Pad2>
-            <Pad2>{value.timeSpent} seconds</Pad2>
+            <Pad2>{formatTime(value.timeSpent)}</Pad2>
           </Card>
         ))}
       </CardList>
