@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 
 import styled from 'styled-components'
 
 import { COLORS } from '../styles/colors'
+import { sortByTimeSpent } from '../utils'
 
 const Margin4 = styled.div`
   margin: 4px;
@@ -62,12 +63,15 @@ export default function DailyUsage() {
     }
   }, [])
 
+  const sortStorageData = useCallback(sortByTimeSpent, [])
+  const sortedStorageData = Object.entries(storageData).sort(sortStorageData)
+
   return (
     <Margin4>
       <div>Current URL: {currentURL}</div>
       <div>Time spent:</div>
       <CardList>
-        {Object.entries(storageData).map(([key, value]) => (
+        {sortedStorageData.map(([key, value]) => (
           <Card key={key}>
             <img src={value.favicon} alt="favicon" width="30" />
             <Pad2>{key}</Pad2>
