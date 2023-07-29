@@ -8,11 +8,6 @@ const Margin4 = styled.div`
   margin: 4px;
 `
 
-const Container = styled.div`
-  width: 500px;
-  height: 500px;
-`
-
 const CardList = styled.ul`
   list-style-type: none;
   padding-left: 0;
@@ -29,8 +24,8 @@ const Card = styled.li`
   align-items: center;
   flex-direction: column;
   border-radius: 8px;
-
   box-shadow: ${COLORS.box_shadow01};
+
   &:hover {
     box-shadow: ${COLORS.box_shadow02};
   }
@@ -68,20 +63,18 @@ export default function DailyUsage() {
   }, [])
 
   return (
-    <Container>
-      <Margin4>
-        <div>Current URL: {currentURL}</div>
-        <div>Time spent:</div>
-        <CardList>
-          {Object.entries(storageData).map(([key, value]) => (
-            <Card key={key}>
-              <img src={value.favicon} alt="favicon" width="30" />
-              <Pad2>{key}</Pad2>
-              <Pad2>{value.timeSpent} seconds</Pad2>
-            </Card>
-          ))}
-        </CardList>
-      </Margin4>
-    </Container>
+    <Margin4>
+      <div>Current URL: {currentURL}</div>
+      <div>Time spent:</div>
+      <CardList>
+        {Object.entries(storageData).map(([key, value]) => (
+          <Card key={key}>
+            <img src={value.favicon} alt="favicon" width="30" />
+            <Pad2>{key}</Pad2>
+            <Pad2>{value.timeSpent} seconds</Pad2>
+          </Card>
+        ))}
+      </CardList>
+    </Margin4>
   )
 }
