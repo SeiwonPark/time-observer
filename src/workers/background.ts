@@ -2,6 +2,7 @@ import { formatDate, getDomainNameFromUrl } from 'utils'
 
 const defaultFavicon = '/default.png'
 let checkInterval: NodeJS.Timeout | null = null
+let datesQueue: string[] = []
 
 /**
  * Defines domain name to filter
@@ -84,4 +85,22 @@ async function saveTime(domain: string, favicon: string, second: number): Promis
   }
 
   await chrome.storage.local.set(data)
+  await handleDate(today)
+}
+
+/**
+ * Handle dates to save only the last 7 days' data
+ * @param {string} today - Today's date
+ */
+async function handleDate(today: string): Promise<void> {
+  if (!datesQueue.includes(today)) {
+    datesQueue.push(today)
+  }
+
+  if (datesQueue.length > 7) {
+    const dateExpired = datesQueue.shift()
+    if (dateExpired) {
+      await chrome.storage.local.remove(dateExpired)
+    }
+  }
 }
