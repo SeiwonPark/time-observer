@@ -1,3 +1,7 @@
+/**
+ * This is the global style for overall view of chrome extension.
+ * Any styles for `body`, `font`, ... could be set from this.
+ */
 import { createGlobalStyle } from 'styled-components'
 
 export const GlobalStyle = createGlobalStyle`

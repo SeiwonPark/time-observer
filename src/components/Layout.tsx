@@ -1,3 +1,6 @@
+/**
+ * This component defines common layout of each page.
+ */
 import React, { ReactNode } from 'react'
 
 import styled from 'styled-components'
