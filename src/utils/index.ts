@@ -1,7 +1,8 @@
 /**
- * Sorts data from chrome's local storage by its key 'timeSpent' from the 'StorageItem'.
+ * Sorts data from chrome's local storage by its key 'timeSpent' from the 'DailyStorageItem'.
  */
-export const sortByTimeSpent = (a: [string, StorageItem], b: [string, StorageItem]) => b[1].timeSpent - a[1].timeSpent
+export const sortByTimeSpent = (a: [string, DailyStorageItem], b: [string, DailyStorageItem]) =>
+  b[1].timeSpent - a[1].timeSpent
 
 /**
  * Returns formatted date
