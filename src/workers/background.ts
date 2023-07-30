@@ -47,7 +47,7 @@ async function setTimeInterval(activeTabId: number | null, second: number = 1): 
       return
     }
 
-    const domain = await getDomainNameFromUrl(tab.url)
+    const domain = getDomainNameFromUrl(tab.url)
     const favicon = tab.favIconUrl || defaultFavicon
 
     if (blackLists.includes(domain)) {

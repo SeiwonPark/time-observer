@@ -3,7 +3,7 @@ import React, { useCallback, useEffect, useState } from 'react'
 import styled from 'styled-components'
 
 import { COLORS } from '../styles/colors'
-import { sortByTimeSpent, formatTime } from '../utils'
+import { sortByTimeSpent, formatTime, getDomainNameFromUrl } from '../utils'
 
 const Margin4 = styled.div`
   margin: 4px;
@@ -17,7 +17,7 @@ const CardList = styled.ul`
   grid-template-rows: repeat(3, auto);
 `
 
-const Card = styled.li`
+const Card = styled.li<{ isCurrent?: boolean }>`
   margin: 8px 4px;
   padding: 1em;
   display: flex;
@@ -25,7 +25,7 @@ const Card = styled.li`
   align-items: center;
   flex-direction: column;
   border-radius: 8px;
-  box-shadow: ${COLORS.box_shadow01};
+  box-shadow: ${(props) => (props.isCurrent ? COLORS.box_shadow03 : COLORS.box_shadow01)};
 
   &:hover {
     box-shadow: ${COLORS.box_shadow02};
@@ -37,12 +37,14 @@ const Pad2 = styled.div`
 `
 
 export default function DailyUsage() {
-  const [currentURL, setCurrentURL] = useState<string>()
+  const [currentDomain, setCurrentDomain] = useState<string>()
   const [storageData, setStorageData] = useState<StorageData>({})
 
   useEffect(() => {
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-      setCurrentURL(tabs[0].url)
+      if (tabs[0].url) {
+        setCurrentDomain(getDomainNameFromUrl(tabs[0].url))
+      }
     })
   }, [])
 
@@ -68,10 +70,10 @@ export default function DailyUsage() {
 
   return (
     <Margin4>
-      <div>Current URL: {currentURL}</div>
+      <div>Current domain: {currentDomain}</div>
       <CardList>
         {sortedStorageData.map(([key, value]) => (
-          <Card key={key}>
+          <Card key={key} isCurrent={key === currentDomain}>
             <img src={value.favicon} alt="favicon" width="24" />
             <Pad2>{key}</Pad2>
             <Pad2>{formatTime(value.timeSpent)}</Pad2>
