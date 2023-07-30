@@ -1,5 +1,13 @@
+import { getDomainNameFromUrl } from 'utils'
+
 const initialTimes: InitialTimes = {}
+const defaultFavicon = '/default.png'
 let checkInterval: NodeJS.Timeout | null = null
+
+/**
+ * Defines domain name to filter
+ */
+const blackLists = ['extensions', 'newtab']
 
 chrome.tabs.onActivated.addListener(initObserve)
 
@@ -39,8 +47,12 @@ async function setTimeInterval(activeTabId: number | null, second: number = 1): 
       return
     }
 
-    const domain = await getDomainNameFromUrl(tab.url)
-    const favicon = tab.favIconUrl || ''
+    const domain = getDomainNameFromUrl(tab.url)
+    const favicon = tab.favIconUrl || defaultFavicon
+
+    if (blackLists.includes(domain)) {
+      return
+    }
 
     if (domain) {
       await saveTime(domain, favicon, second)
@@ -75,23 +87,13 @@ async function saveTime(key: string, favicon: string, second: number): Promise<v
 }
 
 /**
- * Returns domain name from the given url.
- * @param {string} url - Full URL
- * @returns {string} Domain name
- */
-async function getDomainNameFromUrl(url: string): Promise<string> {
-  const match = url.match(/:\/\/(.[^/]+)/)
-  return match ? match[1] : ''
-}
-
-/**
  * Sets favicon url only if it's not set.
  * @param {string} key - Domain name
  * @param {string} favicon - Favicon URL
  */
 async function initializeFavicon(key: string, favicon: string): Promise<void> {
   const data = await chrome.storage.local.get([key])
-  if (data[key] === undefined || data[key].favicon === '') {
+  if (data[key] === undefined || data[key].favicon === defaultFavicon) {
     await chrome.storage.local.set({
       [key]: {
         timeSpent: 0,

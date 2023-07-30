@@ -23,7 +23,7 @@ module.exports = {
       version: 'detect',
     },
   },
-  plugins: ['@typescript-eslint', 'react', 'eslint-plugin-prettier'],
+  plugins: ['@typescript-eslint', 'react', 'eslint-plugin-prettier', 'import', 'prettier'],
   rules: {
     /* Warns */
     'prettier/prettier': 'warn',
@@ -34,5 +34,24 @@ module.exports = {
     'linebreak-style': ['error', 'unix'],
     quotes: ['error', 'single'],
     semi: ['error', 'never'],
+    /* Import order */
+    'import/order': [
+      'error',
+      {
+        groups: ['builtin', 'external', 'internal'],
+        pathGroups: [
+          {
+            pattern: 'react',
+            group: 'external',
+            position: 'before',
+          },
+        ],
+        pathGroupsExcludedImportTypes: ['react'],
+        'newlines-between': 'always',
+        alphabetize: {
+          caseInsensitive: true,
+        },
+      },
+    ],
   },
 }
