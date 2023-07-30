@@ -1,3 +1,5 @@
+import { getDomainNameFromUrl } from 'utils'
+
 const initialTimes: InitialTimes = {}
 const defaultFavicon = '/default.png'
 let checkInterval: NodeJS.Timeout | null = null
@@ -82,16 +84,6 @@ async function saveTime(key: string, favicon: string, second: number): Promise<v
 
   initialTimes[key] = new Date().getTime()
   await initializeFavicon(key, favicon)
-}
-
-/**
- * Returns domain name from the given url.
- * @param {string} url - Full URL
- * @returns {string} Domain name
- */
-async function getDomainNameFromUrl(url: string): Promise<string> {
-  const match = url.match(/:\/\/(?:www\.)?(.[^/]+)/)
-  return match ? match[1] : ''
 }
 
 /**

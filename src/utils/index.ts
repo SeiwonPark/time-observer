@@ -22,3 +22,13 @@ export const formatTime = (time: number): string => {
     ${seconds.toString().padStart(2, '0')}s
   `
 }
+
+/**
+ * Returns domain name from the given url.
+ * @param {string} url - Full URL
+ * @returns {string} Domain name
+ */
+export async function getDomainNameFromUrl(url: string): Promise<string> {
+  const match = url.match(/:\/\/(?:www\.)?(.[^/]+)/)
+  return match ? match[1] : ''
+}
