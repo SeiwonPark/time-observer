@@ -2,6 +2,11 @@ const initialTimes: InitialTimes = {}
 const defaultFavicon = '/default.png'
 let checkInterval: NodeJS.Timeout | null = null
 
+/**
+ * Defines domain name to filter
+ */
+const blackLists = ['extensions', 'newtab']
+
 chrome.tabs.onActivated.addListener(initObserve)
 
 /**
@@ -42,6 +47,10 @@ async function setTimeInterval(activeTabId: number | null, second: number = 1): 
 
     const domain = await getDomainNameFromUrl(tab.url)
     const favicon = tab.favIconUrl || defaultFavicon
+
+    if (blackLists.includes(domain)) {
+      return
+    }
 
     if (domain) {
       await saveTime(domain, favicon, second)
