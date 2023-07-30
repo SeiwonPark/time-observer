@@ -1,4 +1,5 @@
 const initialTimes: InitialTimes = {}
+const defaultFavicon = '/default.png'
 let checkInterval: NodeJS.Timeout | null = null
 
 chrome.tabs.onActivated.addListener(initObserve)
@@ -40,7 +41,7 @@ async function setTimeInterval(activeTabId: number | null, second: number = 1): 
     }
 
     const domain = await getDomainNameFromUrl(tab.url)
-    const favicon = tab.favIconUrl || ''
+    const favicon = tab.favIconUrl || defaultFavicon
 
     if (domain) {
       await saveTime(domain, favicon, second)
@@ -91,7 +92,7 @@ async function getDomainNameFromUrl(url: string): Promise<string> {
  */
 async function initializeFavicon(key: string, favicon: string): Promise<void> {
   const data = await chrome.storage.local.get([key])
-  if (data[key] === undefined || data[key].favicon === '') {
+  if (data[key] === undefined || data[key].favicon === defaultFavicon) {
     await chrome.storage.local.set({
       [key]: {
         timeSpent: 0,
