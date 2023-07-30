@@ -1,12 +1,12 @@
-interface InitialTimes {
-  [key: string]: number
-}
-
 interface StorageItem {
   timeSpent: number
   favicon: string
 }
 
-interface StorageData {
+interface StorageList {
   [key: string]: StorageItem
+}
+
+interface StorageData {
+  [key: string]: StorageList
 }
