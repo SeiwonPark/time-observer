@@ -16,7 +16,9 @@ export const formatTime = (time: number): string => {
   const minutes = ~~((time % 3600) / 60)
   const seconds = time % 60
 
-  return `${hours.toString().padStart(2, '0')}h ${minutes.toString().padStart(2, '0')}m ${seconds
-    .toString()
-    .padStart(2, '0')}s`
+  return `
+    ${hours.toString().padStart(2, '0')}h 
+    ${minutes.toString().padStart(2, '0')}m 
+    ${seconds.toString().padStart(2, '0')}s
+  `
 }

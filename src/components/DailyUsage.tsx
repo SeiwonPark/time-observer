@@ -69,11 +69,10 @@ export default function DailyUsage() {
   return (
     <Margin4>
       <div>Current URL: {currentURL}</div>
-      <div>Time spent:</div>
       <CardList>
         {sortedStorageData.map(([key, value]) => (
           <Card key={key}>
-            <img src={value.favicon} alt="favicon" width="30" />
+            <img src={value.favicon} alt="favicon" width="24" />
             <Pad2>{key}</Pad2>
             <Pad2>{formatTime(value.timeSpent)}</Pad2>
           </Card>

@@ -25,8 +25,8 @@ export default function BottomNavigator() {
     <Container>
       {/* FIXME: to icons */}
       <StyledNavLink to="/">Home</StyledNavLink>
-      <StyledNavLink to="/settings">Settings</StyledNavLink>
       <StyledNavLink to="/notification">Notification</StyledNavLink>
+      <StyledNavLink to="/settings">Settings</StyledNavLink>
     </Container>
   )
 }
