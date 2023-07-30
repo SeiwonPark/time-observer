@@ -1,6 +1,5 @@
-import { getDomainNameFromUrl } from 'utils'
+import { formatDate, getDomainNameFromUrl } from 'utils'
 
-const initialTimes: InitialTimes = {}
 const defaultFavicon = '/default.png'
 let checkInterval: NodeJS.Timeout | null = null
 
@@ -67,38 +66,22 @@ async function setTimeInterval(activeTabId: number | null, second: number = 1): 
  * but can be increased by requesting the "unlimitedStorage" permission.
  * See {@link https://developer.chrome.com/docs/extensions/reference/storage/#storage-areas}
  *
- * @param {string} key - Domain name
+ * @param {string} domain - Domain name
  * @param {string} favicon - Favicon URL
  * @param {number} second - Time interval for saving the time
  */
-async function saveTime(key: string, favicon: string, second: number): Promise<void> {
-  const data = await chrome.storage.local.get([key])
-  const previousData = data[key] !== undefined ? data[key] : { timeSpent: 0, favicon: '' }
+async function saveTime(domain: string, favicon: string, second: number): Promise<void> {
+  const today = formatDate()
+  let data: WeeklyStorageData = await chrome.storage.local.get([today])
+  data[today] = data[today] === undefined ? {} : data[today]
 
-  await chrome.storage.local.set({
-    [key]: {
-      timeSpent: previousData.timeSpent + second,
-      favicon: previousData.favicon || favicon,
-    },
-  })
+  let previousData: DailyStorageItem =
+    data[today][domain] !== undefined ? data[today][domain] : { timeSpent: 0, favicon: favicon }
 
-  initialTimes[key] = new Date().getTime()
-  await initializeFavicon(key, favicon)
-}
-
-/**
- * Sets favicon url only if it's not set.
- * @param {string} key - Domain name
- * @param {string} favicon - Favicon URL
- */
-async function initializeFavicon(key: string, favicon: string): Promise<void> {
-  const data = await chrome.storage.local.get([key])
-  if (data[key] === undefined || data[key].favicon === defaultFavicon) {
-    await chrome.storage.local.set({
-      [key]: {
-        timeSpent: 0,
-        favicon: favicon,
-      },
-    })
+  data[today][domain] = {
+    timeSpent: previousData.timeSpent + second,
+    favicon: previousData.favicon,
   }
+
+  await chrome.storage.local.set(data)
 }
