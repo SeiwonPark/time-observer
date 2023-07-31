@@ -37,10 +37,10 @@ export const formatTime = (time: number): string => {
  */
 export const getPast7days = (today: string): string[] => {
   const date = new Date(today)
-  let past7days = []
+  const past7days = []
 
   for (let i = 0; i < 7; i++) {
-    let tempDate = new Date(date)
+    const tempDate = new Date(date)
     tempDate.setDate(date.getDate() - i)
     past7days.unshift(tempDate.toISOString().split('T')[0])
   }

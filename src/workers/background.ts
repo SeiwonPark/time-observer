@@ -2,7 +2,7 @@ import { formatDate, getDomainNameFromUrl } from '../utils'
 
 const defaultFavicon = '/default.png'
 let checkInterval: NodeJS.Timeout | null = null
-let datesQueue: string[] = []
+const datesQueue: string[] = []
 
 /**
  * Defines domain name to filter
@@ -73,10 +73,10 @@ async function setTimeInterval(activeTabId: number | null, second: number = 1): 
  */
 async function saveTime(domain: string, favicon: string, second: number): Promise<void> {
   const today = formatDate()
-  let data: WeeklyStorageData = await chrome.storage.local.get([today])
+  const data: WeeklyStorageData = await chrome.storage.local.get([today])
   data[today] = data[today] === undefined ? {} : data[today]
 
-  let previousData: DailyStorageItem =
+  const previousData: DailyStorageItem =
     data[today][domain] !== undefined ? data[today][domain] : { timeSpent: 0, favicon: favicon }
 
   data[today][domain] = {
