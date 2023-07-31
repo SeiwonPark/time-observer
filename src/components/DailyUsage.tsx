@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 
 import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
@@ -41,6 +41,7 @@ const Pad2 = styled.div`
 export default function DailyUsage() {
   const [currentDomain, setCurrentDomain] = useState<string>()
   const [storageData, setStorageData] = useState<DailyStorageList>({})
+  const today = useMemo(() => formatDate(), [])
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -52,8 +53,6 @@ export default function DailyUsage() {
   }, [])
 
   useEffect(() => {
-    const today = formatDate()
-
     chrome.storage.local.get(null, (result: WeeklyStorageData) => {
       const dailyData = result[today]
       if (dailyData) {
@@ -84,7 +83,7 @@ export default function DailyUsage() {
       <div>Current domain: {currentDomain}</div>
       <CardList>
         {sortedStorageData.map(([key, value]) => (
-          <Card key={key} isCurrent={key === currentDomain} onClick={() => navigate(key)}>
+          <Card key={key} isCurrent={key === currentDomain} onClick={() => navigate(key, { state: today })}>
             <img src={value.favicon} alt="favicon" width="24" />
             <Pad2>{key}</Pad2>
             <Pad2>{formatTime(value.timeSpent)}</Pad2>
