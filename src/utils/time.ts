@@ -19,15 +19,11 @@ export const formatDate = (date: Date = new Date()): string => {
  * formatTime(3662)
  */
 export const formatTime = (time: number): string => {
-  const hours = ~~(time / 3600)
-  const minutes = ~~((time % 3600) / 60)
-  const seconds = time % 60
+  const hours = (~~(time / 3600)).toString().padStart(2, '0')
+  const minutes = (~~((time % 3600) / 60)).toString().padStart(2, '0')
+  const seconds = (time % 60).toString().padStart(2, '0')
 
-  return `
-    ${hours.toString().padStart(2, '0')}h 
-    ${minutes.toString().padStart(2, '0')}m 
-    ${seconds.toString().padStart(2, '0')}s
-  `
+  return `${hours}h ${minutes}m ${seconds}s`
 }
 
 /**
