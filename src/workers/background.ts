@@ -1,4 +1,4 @@
-import { formatDate, getDomainNameFromUrl } from 'utils'
+import { formatDate, getDomainNameFromUrl } from '../utils'
 
 const defaultFavicon = '/default.png'
 let checkInterval: NodeJS.Timeout | null = null
