@@ -86,6 +86,9 @@ async function saveTime(domain: string, favicon: string, second: number): Promis
 
   await chrome.storage.local.set(data)
 
+  const currentTimeSpent = data[today][domain].timeSpent
+  sendNotification(domain, currentTimeSpent)
+
   const dateExpired = handleDatesQueue(today, datesQueue)
   if (dateExpired && dateExpired !== '') {
     removeExpiredDate(dateExpired)
@@ -100,4 +103,25 @@ async function removeExpiredDate(dateExpired: string): Promise<void> {
   if (dateExpired) {
     await chrome.storage.local.remove(dateExpired)
   }
+}
+
+/**
+ * Sends a notification
+ * @param {string} domain - Domain name
+ * @param {number} currentTimeSpent - The time spent on the domain
+ */
+function sendNotification(domain: string, currentTimeSpent: number): void {
+  const interval = 10 // FIXME: currently sends notification for every 10 seconds
+  if (currentTimeSpent % interval !== 0) {
+    return
+  }
+
+  const hours = currentTimeSpent / interval
+
+  chrome.notifications.create('notification', {
+    type: 'basic',
+    iconUrl: './default.png',
+    title: domain,
+    message: 'You have spent ' + hours + ' hour(s) on ' + domain,
+  })
 }
