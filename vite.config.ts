@@ -1,3 +1,5 @@
+/// <reference types="vitest" />
+
 import path from 'path'
 
 import react from '@vitejs/plugin-react-swc'
@@ -38,5 +40,9 @@ export default defineConfig({
     postcss: {
       plugins: [],
     },
+  },
+  test: {
+    globals: true,
+    environment: 'happy-dom',
   },
 })
