@@ -1,8 +1,23 @@
 import { formatDate, getDomainNameFromUrl, handleDatesQueue } from '../utils'
 
-const defaultFavicon = '/default.png'
+const DEFAULT_ICON = '/default.png'
+const NOTIFICATION_INTERVAL = 10 // FIXME:  This will store for every 10 seconds
 let checkInterval: NodeJS.Timeout | null = null
 const datesQueue: string[] = []
+
+/**
+ * Initail chrome notification doesn't seem to work at initial operation if current
+ * notification stack is full. This is to resolve the initial-start issue.
+ *
+ * _NOTE_: This could not be shown if current notification stack is full. If you clear
+ * the all notifications, then it should work as expected.
+ */
+chrome.notifications.create(`notification-welcome`, {
+  type: 'basic',
+  iconUrl: DEFAULT_ICON,
+  title: '🎉 Welcome!',
+  message: 'Want to see detailed features? Please check https://github.com/seiwon-yaehee/time-observer 👈',
+})
 
 /**
  * Defines domain name to filter
@@ -21,7 +36,6 @@ async function initObserve(activeInfo: chrome.tabs.TabActiveInfo) {
     await setTimeInterval(activeInfo.tabId, 1)
   } catch (error) {
     // FIXME: Need to send error log
-    console.log('An error occured')
   }
 }
 
@@ -48,7 +62,7 @@ async function setTimeInterval(activeTabId: number | null, second: number = 1): 
     }
 
     const domain = getDomainNameFromUrl(tab.url)
-    const favicon = tab.favIconUrl || defaultFavicon
+    const favicon = tab.favIconUrl || DEFAULT_ICON
 
     if (blackLists.includes(domain)) {
       return
@@ -86,6 +100,11 @@ async function saveTime(domain: string, favicon: string, second: number): Promis
 
   await chrome.storage.local.set(data)
 
+  const currentTimeSpent = data[today][domain].timeSpent
+  if (currentTimeSpent % NOTIFICATION_INTERVAL === 0) {
+    sendNotification(domain, currentTimeSpent)
+  }
+
   const dateExpired = handleDatesQueue(today, datesQueue)
   if (dateExpired && dateExpired !== '') {
     removeExpiredDate(dateExpired)
@@ -100,4 +119,18 @@ async function removeExpiredDate(dateExpired: string): Promise<void> {
   if (dateExpired) {
     await chrome.storage.local.remove(dateExpired)
   }
+}
+
+/**
+ * Sends a notification
+ * @param {string} domain - Domain name
+ * @param {number} currentTimeSpent - The time spent on the domain
+ */
+function sendNotification(domain: string, currentTimeSpent: number): void {
+  chrome.notifications.create(`notification-${Date.now()}`, {
+    type: 'basic',
+    iconUrl: DEFAULT_ICON,
+    title: domain,
+    message: 'You have spent ' + currentTimeSpent + 'seconds on ' + domain,
+  })
 }
