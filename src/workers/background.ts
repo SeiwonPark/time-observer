@@ -1,8 +1,8 @@
-import { formatDate, getDomainNameFromUrl } from '../utils'
+import { formatDate, getDomainNameFromUrl, handleDatesQueue } from '../utils'
 
 const defaultFavicon = '/default.png'
 let checkInterval: NodeJS.Timeout | null = null
-let datesQueue: string[] = []
+const datesQueue: string[] = []
 
 /**
  * Defines domain name to filter
@@ -73,10 +73,10 @@ async function setTimeInterval(activeTabId: number | null, second: number = 1): 
  */
 async function saveTime(domain: string, favicon: string, second: number): Promise<void> {
   const today = formatDate()
-  let data: WeeklyStorageData = await chrome.storage.local.get([today])
+  const data: WeeklyStorageData = await chrome.storage.local.get([today])
   data[today] = data[today] === undefined ? {} : data[today]
 
-  let previousData: DailyStorageItem =
+  const previousData: DailyStorageItem =
     data[today][domain] !== undefined ? data[today][domain] : { timeSpent: 0, favicon: favicon }
 
   data[today][domain] = {
@@ -85,22 +85,19 @@ async function saveTime(domain: string, favicon: string, second: number): Promis
   }
 
   await chrome.storage.local.set(data)
-  await handleDate(today)
+
+  const dateExpired = handleDatesQueue(today, datesQueue)
+  if (dateExpired && dateExpired !== '') {
+    removeExpiredDate(dateExpired)
+  }
 }
 
 /**
- * Handle dates to save only the last 7 days' data
- * @param {string} today - Today's date
+ * Removes date from Chrome's local storage
+ * @param {string} dateExpired - The date to be removed
  */
-async function handleDate(today: string): Promise<void> {
-  if (!datesQueue.includes(today)) {
-    datesQueue.push(today)
-  }
-
-  if (datesQueue.length > 7) {
-    const dateExpired = datesQueue.shift()
-    if (dateExpired) {
-      await chrome.storage.local.remove(dateExpired)
-    }
+async function removeExpiredDate(dateExpired: string): Promise<void> {
+  if (dateExpired) {
+    await chrome.storage.local.remove(dateExpired)
   }
 }

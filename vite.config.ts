@@ -1,3 +1,5 @@
+/// <reference types="vitest" />
+
 import path from 'path'
 
 import react from '@vitejs/plugin-react-swc'
@@ -26,6 +28,9 @@ export default defineConfig({
     manifest: true,
     sourcemap: true,
   },
+  /**
+   * _NOTE_: Background service worker runs only inside the chrome extension but not in the browser.
+   */
   server: {
     open: true,
     port: 3000,
@@ -34,6 +39,16 @@ export default defineConfig({
   css: {
     postcss: {
       plugins: [],
+    },
+  },
+  test: {
+    globals: true,
+    environment: 'happy-dom',
+    coverage: {
+      lines: 100,
+      branches: 100,
+      functions: 100,
+      statements: 100,
     },
   },
 })
