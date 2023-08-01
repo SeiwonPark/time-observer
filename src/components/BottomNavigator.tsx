@@ -5,7 +5,7 @@ import styled from 'styled-components'
 
 import { COLORS } from '../styles/colors'
 
-const Container = styled.div`
+const Nav = styled.nav`
   width: calc(100% - 14px);
   height: 60px;
   display: flex;
@@ -22,11 +22,11 @@ const StyledNavLink = styled(NavLink)`
 
 export default function BottomNavigator() {
   return (
-    <Container>
+    <Nav>
       {/* FIXME: to icons */}
       <StyledNavLink to="/">Home</StyledNavLink>
       <StyledNavLink to="/notification">Notification</StyledNavLink>
       <StyledNavLink to="/settings">Settings</StyledNavLink>
-    </Container>
+    </Nav>
   )
 }

@@ -1,9 +1,10 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 
+import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 
 import { COLORS } from '../styles/colors'
-import { sortByTimeSpent, formatTime, getDomainNameFromUrl } from '../utils'
+import { formatDate, sortByTimeSpent, formatTime, getDomainNameFromUrl } from '../utils'
 
 const Margin4 = styled.div`
   margin: 4px;
@@ -26,6 +27,7 @@ const Card = styled.li<{ isCurrent?: boolean }>`
   flex-direction: column;
   border-radius: 8px;
   box-shadow: ${(props) => (props.isCurrent ? COLORS.box_shadow03 : COLORS.box_shadow01)};
+  cursor: pointer;
 
   &:hover {
     box-shadow: ${COLORS.box_shadow02};
@@ -38,7 +40,9 @@ const Pad2 = styled.div`
 
 export default function DailyUsage() {
   const [currentDomain, setCurrentDomain] = useState<string>()
-  const [storageData, setStorageData] = useState<StorageData>({})
+  const [storageData, setStorageData] = useState<DailyStorageList>({})
+  const today = useMemo(() => formatDate(), [])
+  const navigate = useNavigate()
 
   useEffect(() => {
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
@@ -49,13 +53,19 @@ export default function DailyUsage() {
   }, [])
 
   useEffect(() => {
-    chrome.storage.local.get(null, (result) => {
-      setStorageData(result)
+    chrome.storage.local.get(null, (result: WeeklyStorageData) => {
+      const dailyData = result[today]
+      if (dailyData) {
+        setStorageData(dailyData)
+      }
     })
 
     const onChange = (_: { [key: string]: chrome.storage.StorageChange }) => {
-      chrome.storage.local.get(null, (result) => {
-        setStorageData(result)
+      chrome.storage.local.get(null, (result: WeeklyStorageData) => {
+        const dailyData = result[today]
+        if (dailyData) {
+          setStorageData(dailyData)
+        }
       })
     }
     chrome.storage.onChanged.addListener(onChange)
@@ -73,7 +83,7 @@ export default function DailyUsage() {
       <div>Current domain: {currentDomain}</div>
       <CardList>
         {sortedStorageData.map(([key, value]) => (
-          <Card key={key} isCurrent={key === currentDomain}>
+          <Card key={key} isCurrent={key === currentDomain} onClick={() => navigate(key, { state: today })}>
             <img src={value.favicon} alt="favicon" width="24" />
             <Pad2>{key}</Pad2>
             <Pad2>{formatTime(value.timeSpent)}</Pad2>

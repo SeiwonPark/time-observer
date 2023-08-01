@@ -5,7 +5,7 @@ import React, { ReactNode } from 'react'
 
 import styled from 'styled-components'
 
-import { GlobalStyle } from '../styles/GlobalStyle'
+import { GlobalStyle } from '../styles/globalStyle'
 import BottomNavigator from './BottomNavigator'
 
 const Container = styled.div`

@@ -1,12 +1,21 @@
-interface InitialTimes {
-  [key: string]: number
-}
-
-interface StorageItem {
+/**
+ * Daily storage data for each website
+ */
+interface DailyStorageItem {
   timeSpent: number
   favicon: string
 }
 
-interface StorageData {
+/**
+ * Daily storage data for all websites
+ */
+interface DailyStorageList {
   [key: string]: StorageItem
+}
+
+/**
+ * Weekly storage data for all websites
+ */
+interface WeeklyStorageData {
+  [key: string]: StorageList
 }
