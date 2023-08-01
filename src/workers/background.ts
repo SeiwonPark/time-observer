@@ -6,10 +6,13 @@ let checkInterval: NodeJS.Timeout | null = null
 const datesQueue: string[] = []
 
 /**
- * Chrome notification doesn't seem to work at initial operation.
- * This empty notification is to resolve the issue.
+ * Initail chrome notification doesn't seem to work at initial operation if current
+ * notification stack is full. This is to resolve the initial-start issue.
+ *
+ * _NOTE_: This could not be shown if current notification stack is full. If you clear
+ * the all notifications, then it should work as expected.
  */
-chrome.notifications.create(`notification-init`, {
+chrome.notifications.create(`notification-welcome`, {
   type: 'basic',
   iconUrl: DEFAULT_ICON,
   title: '🎉 Welcome!',
