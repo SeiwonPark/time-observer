@@ -1,6 +1,7 @@
 import { formatDate, getDomainNameFromUrl, handleDatesQueue } from '../utils'
 
-const defaultFavicon = '/default.png'
+const DEFAULT_ICON = '/default.png'
+const NOTIFICATION_INTERVAL = 10 // FIXME:  This will store for every 10 seconds
 let checkInterval: NodeJS.Timeout | null = null
 const datesQueue: string[] = []
 
@@ -48,7 +49,7 @@ async function setTimeInterval(activeTabId: number | null, second: number = 1): 
     }
 
     const domain = getDomainNameFromUrl(tab.url)
-    const favicon = tab.favIconUrl || defaultFavicon
+    const favicon = tab.favIconUrl || DEFAULT_ICON
 
     if (blackLists.includes(domain)) {
       return
@@ -87,7 +88,9 @@ async function saveTime(domain: string, favicon: string, second: number): Promis
   await chrome.storage.local.set(data)
 
   const currentTimeSpent = data[today][domain].timeSpent
-  sendNotification(domain, currentTimeSpent)
+  if (currentTimeSpent % NOTIFICATION_INTERVAL === 0) {
+    sendNotification(domain, currentTimeSpent)
+  }
 
   const dateExpired = handleDatesQueue(today, datesQueue)
   if (dateExpired && dateExpired !== '') {
@@ -111,17 +114,10 @@ async function removeExpiredDate(dateExpired: string): Promise<void> {
  * @param {number} currentTimeSpent - The time spent on the domain
  */
 function sendNotification(domain: string, currentTimeSpent: number): void {
-  const interval = 10 // FIXME: currently sends notification for every 10 seconds
-  if (currentTimeSpent % interval !== 0) {
-    return
-  }
-
-  const hours = currentTimeSpent / interval
-
-  chrome.notifications.create('notification', {
+  chrome.notifications.create(`notification-${Date.now()}`, {
     type: 'basic',
-    iconUrl: './default.png',
+    iconUrl: DEFAULT_ICON,
     title: domain,
-    message: 'You have spent ' + hours + ' hour(s) on ' + domain,
+    message: 'You have spent ' + currentTimeSpent + 'seconds on' + domain,
   })
 }
