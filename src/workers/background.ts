@@ -131,6 +131,6 @@ function sendNotification(domain: string, currentTimeSpent: number): void {
     type: 'basic',
     iconUrl: DEFAULT_ICON,
     title: domain,
-    message: 'You have spent ' + currentTimeSpent + 'seconds on' + domain,
+    message: 'You have spent ' + currentTimeSpent + 'seconds on ' + domain,
   })
 }
