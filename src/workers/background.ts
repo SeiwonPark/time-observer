@@ -36,7 +36,6 @@ async function initObserve(activeInfo: chrome.tabs.TabActiveInfo) {
     await setTimeInterval(activeInfo.tabId, 1)
   } catch (error) {
     // FIXME: Need to send error log
-    console.log('An error occured')
   }
 }
 
@@ -103,7 +102,6 @@ async function saveTime(domain: string, favicon: string, second: number): Promis
 
   const currentTimeSpent = data[today][domain].timeSpent
   if (currentTimeSpent % NOTIFICATION_INTERVAL === 0) {
-    console.log('currentTimeSpent: ', currentTimeSpent)
     sendNotification(domain, currentTimeSpent)
   }
 
@@ -129,7 +127,6 @@ async function removeExpiredDate(dateExpired: string): Promise<void> {
  * @param {number} currentTimeSpent - The time spent on the domain
  */
 function sendNotification(domain: string, currentTimeSpent: number): void {
-  console.log('from notification function: ', currentTimeSpent)
   chrome.notifications.create(`notification-${Date.now()}`, {
     type: 'basic',
     iconUrl: DEFAULT_ICON,
