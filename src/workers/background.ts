@@ -6,6 +6,17 @@ let checkInterval: NodeJS.Timeout | null = null
 const datesQueue: string[] = []
 
 /**
+ * Chrome notification doesn't seem to work at initial operation.
+ * This empty notification is to resolve the issue.
+ */
+chrome.notifications.create(`notification-init`, {
+  type: 'basic',
+  iconUrl: DEFAULT_ICON,
+  title: '🎉 Welcome!',
+  message: 'Want to see detailed features? Please check https://github.com/seiwon-yaehee/time-observer 👈',
+})
+
+/**
  * Defines domain name to filter
  */
 const blackLists = ['extensions', 'newtab']
@@ -89,6 +100,7 @@ async function saveTime(domain: string, favicon: string, second: number): Promis
 
   const currentTimeSpent = data[today][domain].timeSpent
   if (currentTimeSpent % NOTIFICATION_INTERVAL === 0) {
+    console.log('currentTimeSpent: ', currentTimeSpent)
     sendNotification(domain, currentTimeSpent)
   }
 
@@ -114,6 +126,7 @@ async function removeExpiredDate(dateExpired: string): Promise<void> {
  * @param {number} currentTimeSpent - The time spent on the domain
  */
 function sendNotification(domain: string, currentTimeSpent: number): void {
+  console.log('from notification function: ', currentTimeSpent)
   chrome.notifications.create(`notification-${Date.now()}`, {
     type: 'basic',
     iconUrl: DEFAULT_ICON,
