@@ -30,16 +30,38 @@ export const formatTime = (time: number): string => {
  * Returns past 7 days from today
  * @param {string} today - Date string for today
  * @returns {string[]} Date list of the past 7 days from today
+ * @example
+ * // Returns ['2023-08-15', '2023-08-16', '2023-08-17', '2023-08-18', '2023-08-19', '2023-08-20', '2023-08-21']
+ * getPast7Days('2023-08-21')
  */
-export const getPast7days = (today: string): string[] => {
+export const getPast7Days = (today: string): string[] => {
   const date = new Date(today)
-  const past7days = []
+  const past7Days = []
 
-  for (let i = 0; i < 7; i++) {
+  for (let i = 0; i < 7; ++i) {
     const tempDate = new Date(date)
     tempDate.setDate(date.getDate() - i)
-    past7days.unshift(tempDate.toISOString().split('T')[0])
+    past7Days.unshift(tempDate.toISOString().split('T')[0])
   }
 
-  return past7days
+  return past7Days
+}
+
+/**
+ * Returns past 7 dates from today
+ * @returns {string[]} Date list of the past 7 days from today
+ * @example
+ * // Returns ['Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun', 'Mon'] (on '2023-08-21')
+ * getPast7Dates()
+ */
+export const getPast7Dates = (): string[] => {
+  const DATES = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
+  const past7Days = getPast7Days(new Date().toISOString().split('T')[0])
+  const past7Dates = []
+
+  for (let i = 0; i < 7; ++i) {
+    past7Dates.push(DATES[new Date(past7Days[i]).getDay()])
+  }
+
+  return past7Dates
 }
