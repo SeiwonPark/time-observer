@@ -1,7 +1,7 @@
 /* eslint quotes: 'off' */
 import { it, describe, expect, vi, afterEach, beforeEach } from 'vitest'
 
-import { formatDate, formatTime, getDomainNameFromUrl, getPast7days, handleDatesQueue, sortByTimeSpent } from '../utils'
+import { formatDate, formatTime, getDomainNameFromUrl, getPast7Days, handleDatesQueue, sortByTimeSpent } from '../utils'
 
 describe('Utils Test', () => {
   beforeEach(() => {
@@ -28,9 +28,9 @@ describe('Utils Test', () => {
     expect(time.trim()).toBe('01h 01m 02s')
   })
 
-  it('getPast7days returns an array of the past 7 dates including today in order', () => {
+  it('getPast7Days returns an array of the past 7 dates including today in order', () => {
     const today = formatDate()
-    const dates = getPast7days(today)
+    const dates = getPast7Days(today)
     // in order
     expect(dates).toEqual([
       '2023-07-02',
