@@ -1,7 +1,7 @@
 import { formatDate, getDomainNameFromUrl, handleDatesQueue } from '../utils'
 
 const DEFAULT_ICON = '/default.png'
-const NOTIFICATION_INTERVAL = 10 // FIXME:  This will store for every 10 seconds
+const NOTIFICATION_INTERVAL = 3600 // seconds
 let checkInterval: NodeJS.Timeout | null = null
 const datesQueue: string[] = []
 
