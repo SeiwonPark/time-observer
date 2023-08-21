@@ -34,6 +34,14 @@ const Card = styled.li<{ isCurrent?: boolean }>`
   }
 `
 
+const Domain = styled.span`
+  text-align: center;
+  width: 120px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+`
+
 const Pad2 = styled.div`
   padding: 2px;
 `
@@ -85,7 +93,7 @@ export default function DailyUsage() {
         {sortedStorageData.map(([key, value]) => (
           <Card key={key} isCurrent={key === currentDomain} onClick={() => navigate(key, { state: today })}>
             <img src={value.favicon} alt="favicon" width="24" />
-            <Pad2>{key}</Pad2>
+            <Domain>{key}</Domain>
             <Pad2>{formatTime(value.timeSpent)}</Pad2>
           </Card>
         ))}
