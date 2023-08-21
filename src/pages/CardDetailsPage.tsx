@@ -15,7 +15,6 @@ export default function CardDetailsPage() {
 
   return (
     <Layout>
-      <h1>{endpoint}</h1>
       <WeeklyUsage endpoint={endpoint} today={route.state} />
     </Layout>
   )

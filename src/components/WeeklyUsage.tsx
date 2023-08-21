@@ -3,7 +3,8 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 
-import { getPast7days } from '../utils'
+import { getPast7Days, getPast7Dates, formatTime } from '../utils'
+import Chart from './Chart'
 
 // FIXME: group common components i.e. src/components/common/ or src/components/ui/
 const Margin4 = styled.div`
@@ -23,38 +24,93 @@ interface WeeklyUsageProps {
 }
 
 export default function WeeklyUsage(props: WeeklyUsageProps) {
-  const [past7days, setPast7days] = useState<string[]>([])
-  const [past7daysData, setPast7daysData] = useState<DailyStorageList>({})
+  const [past7Days, setPast7Days] = useState<string[]>([])
+  const [past7DaysData, setPast7DaysData] = useState<DailyStorageItem[]>()
+  const labels = getPast7Dates()
   const navigate = useNavigate()
 
   useEffect(() => {
-    setPast7days(getPast7days(props.today))
+    setPast7Days(getPast7Days(props.today))
   }, [])
 
   useEffect(() => {
     chrome.storage.local.get(null, (result: WeeklyStorageData) => {
-      const pastData: { date: string; timeSpent: number; favicon: string }[] = []
-      past7days.forEach((day) => {
-        if (result[day] && props.endpoint in result[day]) {
-          const temp = {
-            date: day,
-            ...result[day][props.endpoint],
-          }
-          pastData.push(temp)
+      const pastData: { date: string; timeSpent: number; favicon: string }[] = past7Days.map((day) => {
+        const dayData = result[day] && result[day][props.endpoint]
+        return {
+          date: day,
+          timeSpent: dayData ? dayData.timeSpent : 0,
+          favicon: dayData ? dayData.favicon : '',
         }
       })
-      setPast7daysData(pastData)
+      setPast7DaysData(pastData)
     })
-  }, [past7days, props.endpoint])
+  }, [past7Days, props.endpoint])
+
+  const data = {
+    labels,
+    datasets: [
+      {
+        fill: true,
+        label: 'time',
+        data: past7DaysData ? past7DaysData.map((item) => item.timeSpent) : [],
+        borderColor: 'rgb(53, 162, 235)',
+        backgroundColor: 'rgba(53, 162, 235, 0.4)',
+        tension: 0.4,
+      },
+    ],
+  }
+
+  const options = {
+    interaction: {
+      mode: 'index',
+      axis: 'x',
+      intersect: false,
+    },
+    responsive: true,
+    plugins: {
+      legend: {
+        display: false,
+      },
+      tooltip: {
+        events: ['mousemove', 'mouseout', 'touchstart', 'touchmove'],
+        callbacks: {
+          label: function (context: any) {
+            const label = context.dataset.label || ''
+            if (label) {
+              const formattedTime = formatTime(context.parsed.y)
+              return `${label}: ${formattedTime}`
+            } else {
+              return label
+            }
+          },
+        },
+      },
+      title: {
+        display: true,
+        text: `Time you spent on ${props.endpoint} for the past week`,
+      },
+    },
+    scales: {
+      x: {
+        title: {
+          display: true,
+          text: 'Days of the Week',
+        },
+      },
+      y: {
+        title: {
+          display: true,
+          text: 'Time Spent (seconds)',
+        },
+      },
+    },
+  }
 
   return (
     <Margin4>
       <Nav onClick={() => navigate(-1)}>&larr;</Nav>
-      <ul>
-        {Object.values(past7daysData).map((dailyItemData: DailyStorageItem, index) => (
-          <li key={index}>{JSON.stringify(dailyItemData)}</li>
-        ))}
-      </ul>
+      <Chart data={data} options={options} />
     </Margin4>
   )
 }
