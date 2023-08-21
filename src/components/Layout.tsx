@@ -9,13 +9,13 @@ import { GlobalStyle } from '../styles/globalStyle'
 import BottomNavigator from './BottomNavigator'
 
 const Container = styled.div`
-  width: 500px;
+  width: 375px;
   height: 100%;
   overflow: hidden;
 `
 
 const Content = styled.div`
-  height: 500px;
+  height: 620px;
   overflow-y: scroll;
 `
 
