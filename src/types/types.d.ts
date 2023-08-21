@@ -2,6 +2,7 @@
  * Daily storage data for each website
  */
 interface DailyStorageItem {
+  date?: string
   timeSpent: number
   favicon: string
 }
@@ -10,12 +11,12 @@ interface DailyStorageItem {
  * Daily storage data for all websites
  */
 interface DailyStorageList {
-  [key: string]: StorageItem
+  [key: string]: DailyStorageItem
 }
 
 /**
  * Weekly storage data for all websites
  */
 interface WeeklyStorageData {
-  [key: string]: StorageList
+  [key: string]: DailyStorageList
 }

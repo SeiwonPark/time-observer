@@ -5,18 +5,19 @@ import path from 'path'
 import react from '@vitejs/plugin-react-swc'
 import { defineConfig } from 'vite'
 import tsconfigPaths from 'vite-tsconfig-paths'
+import cssInjectedByJsPlugin from 'vite-plugin-css-injected-by-js'
 
 export default defineConfig({
-  plugins: [react(), tsconfigPaths()],
+  plugins: [react(), tsconfigPaths(), cssInjectedByJsPlugin()],
   root: __dirname,
   publicDir: 'public',
   resolve: {},
   build: {
     rollupOptions: {
       input: {
-        index: path.resolve(__dirname, 'src/index.tsx'),
-        background: path.resolve(__dirname, 'src/workers/background.ts'),
-        content: path.resolve(__dirname, 'src/scripts/content.tsx'),
+        index: path.resolve(__dirname, '/src/index.tsx'),
+        background: path.resolve(__dirname, '/src/workers/background.ts'),
+        content: path.resolve(__dirname, '/src/scripts/content.tsx'),
       },
       output: {
         entryFileNames: '[name].js',
