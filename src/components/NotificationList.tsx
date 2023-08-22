@@ -116,7 +116,7 @@ export default function NotificationList() {
                       ? 'Today'
                       : `Last ${new Date(day).toLocaleDateString('en-US', { weekday: 'long' })}`}
                   </DateTitle>
-                  {dayNotifications.map((notification: TimeNotification, index: number) => (
+                  {dayNotifications.reverse().map((notification: TimeNotification, index: number) => (
                     <Card key={index}>
                       <CardContent>
                         <Favicon src={notification.favicon} alt="favicon" width="20" height="20" />
