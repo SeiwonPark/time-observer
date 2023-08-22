@@ -24,7 +24,7 @@ type SVGProps = React.FC<React.SVGProps<SVGElement>>
 type WidgetUnit = 'percent' | 'time'
 
 /**
- * Daily storage data for each website
+ * Daily storage data for each website.
  */
 interface DailyStorageItem {
   /**
@@ -32,25 +32,51 @@ interface DailyStorageItem {
    */
   date?: string
   /**
-   * The time spent on the item.
+   * The time spent on the website.
    */
   timeSpent: number
   /**
-   * Favicon URL of the item.
+   * Favicon URL of the website.
    */
   favicon: string
 }
 
 /**
- * Daily storage data for all websites
+ * Daily storage data for all websites.
  */
 interface DailyStorageList {
   [key: string]: DailyStorageItem
 }
 
 /**
- * Weekly storage data for all websites
+ * Weekly storage data for all websites.
  */
 interface WeeklyStorageData {
   [key: string]: DailyStorageList
+}
+
+/**
+ * This is notification item for the website where notification has been sent from.
+ */
+interface TimeNotification {
+  /**
+   * `YYYY-MM-DD` format date string.
+   */
+  date: string
+  /**
+   * Domain name of the website.
+   */
+  domain: string
+  /**
+   * The time spent on the website.
+   */
+  timeSpent: number
+  /**
+   * Favicon URL of the item.
+   */
+  favicon: string
+  /**
+   * The time when notification is sent. (milliseconds)
+   */
+  timestamp: number
 }
