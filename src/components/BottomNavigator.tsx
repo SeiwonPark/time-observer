@@ -8,9 +8,10 @@ import { COLORS } from '../styles/colors'
 const Nav = styled.nav`
   width: calc(100% - 14px);
   height: 60px;
+  bottom: 0;
   display: flex;
   position: fixed;
-  background-color: ${COLORS.box_shadow01};
+  background-color: ${COLORS.black};
   align-items: center;
   justify-content: space-between;
 `

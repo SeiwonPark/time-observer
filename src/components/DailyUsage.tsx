@@ -27,7 +27,7 @@ const Tooltip = styled.div`
   pointer-events: none;
   transform: translate(-50%, -100%);
   white-space: nowrap;
-  color: ${COLORS.secondary};
+  color: ${COLORS.green};
   opacity: 0.9;
 `
 
