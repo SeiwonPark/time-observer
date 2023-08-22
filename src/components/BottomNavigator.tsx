@@ -12,7 +12,7 @@ import IconTimeFill from '../assets/time_fill.svg'
 import { COLORS } from '../styles/colors'
 
 const Nav = styled.nav`
-  width: calc(100% - 48px);
+  width: calc(100% - 44px);
   height: 60px;
   left: 16px;
   bottom: 16px;
