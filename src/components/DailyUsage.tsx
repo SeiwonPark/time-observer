@@ -7,10 +7,6 @@ import IconStopWatch from '../assets/stopwatch.svg'
 import { COLORS } from '../styles/colors'
 import { formatDate, sortByTimeSpent, formatTime, getDomainNameFromUrl } from '../utils'
 
-const Margin4 = styled.div`
-  margin: 4px;
-`
-
 const CardList = styled.ul`
   list-style-type: none;
   padding-left: 0;
@@ -139,7 +135,7 @@ export default function DailyUsage() {
   const sortedStorageData = Object.entries(storageData).sort(sortStorageData)
 
   return (
-    <Margin4>
+    <>
       <div>Current domain: {currentDomain}</div>
       <h2>Today</h2>
       <CardList>
@@ -168,6 +164,6 @@ export default function DailyUsage() {
         ))}
         {tooltip && <Tooltip style={{ top: tooltip.y, left: tooltip.x }}>{tooltip.content}</Tooltip>}
       </CardList>
-    </Margin4>
+    </>
   )
 }

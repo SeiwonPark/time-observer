@@ -9,6 +9,10 @@ import { COLORS } from 'styles/colors'
 import { GlobalStyle } from '../styles/globalStyle'
 import BottomNavigator from './BottomNavigator'
 
+const Margin4 = styled.div`
+  margin: 4px;
+`
+
 const Container = styled.div`
   width: 375px;
   height: 100%;
@@ -27,13 +31,13 @@ const Spacer = styled.div`
 
 export const Layout = ({ children }: { children?: ReactNode }) => {
   return (
-    <>
+    <Margin4>
       <GlobalStyle />
       <Container>
         <Content>{children}</Content>
         <BottomNavigator />
         <Spacer />
       </Container>
-    </>
+    </Margin4>
   )
 }

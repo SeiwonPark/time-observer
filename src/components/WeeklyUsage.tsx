@@ -30,11 +30,6 @@ const Domain = styled.span`
   font-weight: 500;
 `
 
-// FIXME: group common components i.e. src/components/common/ or src/components/ui/
-const Margin4 = styled.div`
-  margin: 4px;
-`
-
 const Margin16 = styled.div`
   margin: 16px;
 `
@@ -151,7 +146,7 @@ export default function WeeklyUsage(props: WeeklyUsageProps) {
   }
 
   return (
-    <Margin4>
+    <>
       <Header>
         <Nav onClick={() => navigate(-1)}>
           <LeftArrow width={40} height={40} />
@@ -178,6 +173,6 @@ export default function WeeklyUsage(props: WeeklyUsageProps) {
         />
       </WidgetContainer>
       <Chart data={data} options={options} />
-    </Margin4>
+    </>
   )
 }

@@ -5,10 +5,6 @@ import styled from 'styled-components'
 import Stopwatch from '../assets/stopwatch.svg'
 import { formatDate, formatTime, getPast7Days } from '../utils'
 
-const Margin4 = styled.div`
-  margin: 4px;
-`
-
 const Header = styled.header`
   display: flex;
   flex-direction: row;
@@ -100,7 +96,7 @@ export default function NotificationList() {
   }, [])
 
   return (
-    <Margin4>
+    <>
       <Header>
         <Title>Notifications</Title>
       </Header>
@@ -140,6 +136,6 @@ export default function NotificationList() {
             return null
           })
       )}
-    </Margin4>
+    </>
   )
 }
