@@ -141,6 +141,7 @@ export default function DailyUsage() {
   return (
     <Margin4>
       <div>Current domain: {currentDomain}</div>
+      <h2>Today</h2>
       <CardList>
         {sortedStorageData.map(([key, value]) => (
           <Card
