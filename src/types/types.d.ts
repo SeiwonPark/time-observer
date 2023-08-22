@@ -80,3 +80,10 @@ interface TimeNotification {
    */
   timestamp: number
 }
+
+/**
+ * This includes notifications during the last 7 days.
+ */
+interface WeeklyTimeNotification {
+  [key: string]: TimeNotification[]
+}
