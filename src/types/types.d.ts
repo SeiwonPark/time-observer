@@ -1,4 +1,19 @@
 /**
+ * Represents Line Chart's data types of Chart.js.
+ */
+type ChartData = import('chart.js').ChartData<'line'>
+
+/**
+ * Represents Line Chart's option types of Chart.js.
+ */
+type ChartOptions = import('chart.js').ChartOptions<'line'>
+
+/**
+ * Represents Line Chart's tooltip item types of Chart.js.
+ */
+type TooltipItem = import('chart.js').TooltipItem<'line'>
+
+/**
  * Represents the SVG component property.
  */
 type SVGProps = React.FC<React.SVGProps<SVGElement>>

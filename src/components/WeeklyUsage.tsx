@@ -71,7 +71,7 @@ export default function WeeklyUsage(props: WeeklyUsageProps) {
 
   useEffect(() => {
     chrome.storage.local.get(null, (result: WeeklyStorageData) => {
-      const pastData: { date: string; timeSpent: number; favicon: string }[] = past7Days.map((day) => {
+      const pastData: DailyStorageItem[] = past7Days.map((day: string) => {
         const dayData = result[day] && result[day][props.endpoint]
         return {
           date: day,
@@ -91,7 +91,7 @@ export default function WeeklyUsage(props: WeeklyUsageProps) {
     }, 0)
   }
 
-  const data = {
+  const data: ChartData = {
     labels,
     datasets: [
       {
@@ -105,7 +105,7 @@ export default function WeeklyUsage(props: WeeklyUsageProps) {
     ],
   }
 
-  const options = {
+  const options: ChartOptions = {
     interaction: {
       mode: 'index',
       axis: 'x',
@@ -117,9 +117,8 @@ export default function WeeklyUsage(props: WeeklyUsageProps) {
         display: false,
       },
       tooltip: {
-        events: ['mousemove', 'mouseout', 'touchstart', 'touchmove'],
         callbacks: {
-          label: function (context: any) {
+          label: function (context: TooltipItem) {
             const label = context.dataset.label || ''
             if (label) {
               const formattedTime = formatTime(context.parsed.y)
