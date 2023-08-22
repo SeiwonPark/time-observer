@@ -2,7 +2,7 @@ import React from 'react'
 
 import styled from 'styled-components'
 
-const Padding16 = styled.div<{ backgroundColor: string }>`
+const Container = styled.div<{ backgroundColor: string }>`
   width: 140px;
   padding: 16px;
   border-radius: 16px;
@@ -69,12 +69,12 @@ export default function Widget({ Icon, title, content, backgroundColor, unit }: 
   }
 
   return (
-    <Padding16 backgroundColor={backgroundColor}>
+    <Container backgroundColor={backgroundColor}>
       <TitleContainer>
         <Icon width={18} height={18} />
         <Title>{title}</Title>
       </TitleContainer>
       <Content>{formatContent()}</Content>
-    </Padding16>
+    </Container>
   )
 }
