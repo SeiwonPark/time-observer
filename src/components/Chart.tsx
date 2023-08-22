@@ -16,8 +16,8 @@ import { Line } from 'react-chartjs-2'
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Filler, Legend)
 
 interface ChartProps {
-  data: any
-  options: any
+  data: ChartData
+  options: ChartOptions
 }
 
 export default function Chart({ data, options }: ChartProps) {

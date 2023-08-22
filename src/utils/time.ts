@@ -1,5 +1,5 @@
 /**
- * Returns formatted date
+ * Converts date object to a formatted string "YYYY-MM-DD".
  * @param {Date} date - Date object
  * @returns {string} Formatted date string
  * @example
@@ -11,11 +11,11 @@ export const formatDate = (date: Date = new Date()): string => {
 }
 
 /**
- * Returns formatted times
+ * Converts seconds to a formatted string "hh:mm:ss".
  * @param {number} time - Time in seconds
  * @returns {string} Formatted time string
  * @example
- * // Returns "01h 01m 02s"
+ * // Returns "01:01:02"
  * formatTime(3662)
  */
 export const formatTime = (time: number): string => {
@@ -23,7 +23,24 @@ export const formatTime = (time: number): string => {
   const minutes = (~~((time % 3600) / 60)).toString().padStart(2, '0')
   const seconds = (time % 60).toString().padStart(2, '0')
 
-  return `${hours}h ${minutes}m ${seconds}s`
+  return `${hours}:${minutes}:${seconds}`
+}
+
+/**
+ * Converts a timestamp to a formatted string "hh:mm:ss YYYY-MM-DD".
+ * @param {number} timestamp - The timestamp value.
+ * @returns {string} Formatted date string.
+ */
+export const formatTimestamp = (timestamp: number): string => {
+  const date = new Date(timestamp)
+  const year = date.getFullYear()
+  const month = String(date.getMonth() + 1).padStart(2, '0')
+  const day = String(date.getDate()).padStart(2, '0')
+  const hours = String(date.getHours()).padStart(2, '0')
+  const minutes = String(date.getMinutes()).padStart(2, '0')
+  const seconds = String(date.getSeconds()).padStart(2, '0')
+
+  return `${hours}:${minutes}:${seconds} ${year}-${month}-${day}`
 }
 
 /**
@@ -64,4 +81,15 @@ export const getPast7Dates = (): string[] => {
   }
 
   return past7Dates
+}
+
+/**
+ * Calculates the date difference between the two dates.
+ * @param {string} date1 - `YYYY-MM-DD` format date string.
+ * @param {string} date2 - `YYYY-MM-DD` format date string.
+ * @returns {number} Integer value of date difference between the two dates.
+ */
+export const getDateDifference = (date1: string, date2: string): number => {
+  const diffMilliseconds = Math.abs(new Date(date1).getTime() - new Date(date2).getTime())
+  return ~~(diffMilliseconds / (24 * 60 * 60 * 1000))
 }
