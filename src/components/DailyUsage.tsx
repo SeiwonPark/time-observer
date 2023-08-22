@@ -3,6 +3,7 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 
+import IconStopWatch from '../assets/stopwatch.svg'
 import { COLORS } from '../styles/colors'
 import { formatDate, sortByTimeSpent, formatTime, getDomainNameFromUrl } from '../utils'
 
@@ -13,9 +14,6 @@ const Margin4 = styled.div`
 const CardList = styled.ul`
   list-style-type: none;
   padding-left: 0;
-  display: grid;
-  grid-template-columns: repeat(3, 33%);
-  grid-template-rows: repeat(3, auto);
 `
 
 const Tooltip = styled.div`
@@ -36,30 +34,47 @@ const Card = styled.li<{ isCurrent?: boolean }>`
   margin: 8px 4px;
   padding: 1em;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
-  flex-direction: column;
-  border-radius: 8px;
-  box-shadow: ${(props) => (props.isCurrent ? COLORS.box_shadow03 : COLORS.box_shadow01)};
+  flex-direction: row;
+  border-radius: 12px;
+  background-color: ${COLORS.white};
   cursor: pointer;
-
-  &:hover {
-    box-shadow: ${COLORS.box_shadow02};
-  }
+`
+const CardRight = styled.div`
+  padding-left: 12px;
 `
 
 const Domain = styled.span`
+  font-weight: 500;
+  font-size: 14px;
   text-align: center;
   width: 120px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  line-height: 36px;
 `
 
 const Pad2 = styled.div`
   padding: 2px;
 `
-
+const Pad12 = styled.div`
+  padding: 12px;
+`
+const TimeSpent = styled.span`
+  font-size: 12px;
+  vertical-align: middle;
+  line-height: 12px;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+`
+const GrayBack = styled.div`
+  background-color: ${COLORS.background};
+  border-radius: 6px;
+  padding: 2px 8px;
+`
 export default function DailyUsage() {
   const [currentDomain, setCurrentDomain] = useState<string>()
   const [storageData, setStorageData] = useState<DailyStorageList>({})
@@ -136,9 +151,18 @@ export default function DailyUsage() {
             onMouseMove={handleMouseMove}
             onMouseLeave={handleMouseLeave}
           >
-            <img src={value.favicon} alt="favicon" width="24" />
-            <Domain>{key}</Domain>
-            <Pad2>{formatTime(value.timeSpent)}</Pad2>
+            <Pad12>
+              <img src={value.favicon} alt="favicon" width="24" height="24" />
+            </Pad12>
+            <CardRight>
+              <Domain>{key}</Domain>
+              <GrayBack>
+                <TimeSpent>
+                  <IconStopWatch />
+                  <Pad2>{formatTime(value.timeSpent)}</Pad2>
+                </TimeSpent>
+              </GrayBack>
+            </CardRight>
           </Card>
         ))}
         {tooltip && <Tooltip style={{ top: tooltip.y, left: tooltip.x }}>{tooltip.content}</Tooltip>}
