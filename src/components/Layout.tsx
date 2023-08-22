@@ -12,8 +12,7 @@ import BottomNavigator from './BottomNavigator'
 const Container = styled.div`
   width: 375px;
   height: 100%;
-  overflow: hidden;
-  background-color: ${COLORS.background};
+  margin: 16px;
 `
 
 const Content = styled.div`
