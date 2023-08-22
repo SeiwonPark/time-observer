@@ -4,6 +4,7 @@
 import React, { ReactNode } from 'react'
 
 import styled from 'styled-components'
+import { COLORS } from 'styles/colors'
 
 import { GlobalStyle } from '../styles/globalStyle'
 import BottomNavigator from './BottomNavigator'
@@ -12,6 +13,7 @@ const Container = styled.div`
   width: 375px;
   height: 100%;
   overflow: hidden;
+  background-color: ${COLORS.background};
 `
 
 const Content = styled.div`
