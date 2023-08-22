@@ -65,3 +65,14 @@ export const getPast7Dates = (): string[] => {
 
   return past7Dates
 }
+
+/**
+ * Calculates the date difference between the two dates.
+ * @param {string} date1 - `YYYY-MM-DD` format date string.
+ * @param {string} date2 - `YYYY-MM-DD` format date string.
+ * @returns {number} Integer value of date difference between the two dates.
+ */
+export const getDateDifference = (date1: string, date2: string): number => {
+  const diffMilliseconds = Math.abs(new Date(date1).getTime() - new Date(date2).getTime())
+  return ~~(diffMilliseconds / (24 * 60 * 60 * 1000))
+}
