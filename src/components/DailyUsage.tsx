@@ -79,7 +79,7 @@ const TimeSpent = styled.span`
 `
 const Spacer = styled.div`
   width: 100%;
-  height: 60px;
+  height: 80px;
 `
 export default function DailyUsage() {
   const [currentDomain, setCurrentDomain] = useState<string>()
