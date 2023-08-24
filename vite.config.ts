@@ -1,3 +1,4 @@
+import reactRefresh from '@vitejs/plugin-react-refresh'
 import react from '@vitejs/plugin-react-swc'
 import path from 'path'
 import { defineConfig } from 'vite'
@@ -7,7 +8,8 @@ import tsconfigPaths from 'vite-tsconfig-paths'
 
 export default defineConfig({
   plugins: [
-    react(),
+    react({ plugins: [['@swc/plugin-styled-components', {}]] }),
+    reactRefresh(),
     tsconfigPaths(),
     cssInjectedByJsPlugin(),
     svgr({
