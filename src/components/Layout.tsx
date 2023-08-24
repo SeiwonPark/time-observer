@@ -4,7 +4,6 @@
 import React, { ReactNode } from 'react'
 
 import styled from 'styled-components'
-import { COLORS } from 'styles/colors'
 
 import { GlobalStyle } from '../styles/globalStyle'
 import BottomNavigator from './BottomNavigator'
