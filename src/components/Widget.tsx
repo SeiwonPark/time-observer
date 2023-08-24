@@ -17,7 +17,7 @@ const TitleContainer = styled.div`
 `
 
 const Title = styled.span`
-  padding: 8px;
+  padding: 6px;
   font-size: 16px;
 `
 
