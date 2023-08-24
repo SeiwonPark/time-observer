@@ -12,7 +12,7 @@ const CardList = styled.ul`
   padding-left: 0;
 `
 
-const Card = styled.li<{ isCurrent?: boolean }>`
+const Card = styled.li`
   position: relative;
   margin: 8px 4px;
   padding: 1em;
@@ -117,14 +117,14 @@ export default function DailyUsage() {
   return (
     <>
       <BlackCard>
-        <CurrentTime>00:42:21</CurrentTime>
+        <CurrentTime>{currentDomain ? formatTime(storageData[currentDomain]?.timeSpent) : undefined}</CurrentTime>
         <CurrentDomain>{currentDomain}</CurrentDomain>
       </BlackCard>
 
       <h2>Today</h2>
       <CardList>
         {sortedStorageData.map(([key, value]) => (
-          <Card key={key} isCurrent={key === currentDomain} onClick={() => navigate(key, { state: today })}>
+          <Card key={key} onClick={() => navigate(key, { state: today })}>
             <Pad12>
               <img src={value.favicon} alt="favicon" width="24" height="24" />
             </Pad12>
