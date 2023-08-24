@@ -117,7 +117,7 @@ export default function DailyUsage() {
   return (
     <>
       <BlackCard>
-        <CurrentTime>{currentDomain ? formatTime(storageData[currentDomain]?.timeSpent) : undefined}</CurrentTime>
+        <CurrentTime>{currentDomain ? formatTime(storageData[currentDomain]?.timeSpent) : 0}</CurrentTime>
         <CurrentDomain>{currentDomain}</CurrentDomain>
       </BlackCard>
 
