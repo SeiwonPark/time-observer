@@ -20,8 +20,8 @@ export const GlobalStyle = createGlobalStyle`
 
   /* Scrollbar Style */
   ::-webkit-scrollbar {
-    width: 10px;
-    height: 10px;
+    width: 0px;
+    height: 0px;
   }
 
   ::-webkit-scrollbar-track {

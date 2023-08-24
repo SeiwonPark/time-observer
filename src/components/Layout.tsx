@@ -14,12 +14,11 @@ const Margin4 = styled.div`
 
 const Container = styled.div`
   width: 375px;
-  height: 100%;
   margin: 16px;
 `
 
 const Content = styled.div`
-  height: 620px;
+  height: 508px;
 `
 
 const Spacer = styled.div`

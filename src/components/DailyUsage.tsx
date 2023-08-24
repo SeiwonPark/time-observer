@@ -77,6 +77,10 @@ const TimeSpent = styled.span`
   align-items: center;
   flex-direction: row;
 `
+const Spacer = styled.div`
+  width: 100%;
+  height: 60px;
+`
 export default function DailyUsage() {
   const [currentDomain, setCurrentDomain] = useState<string>()
   const [storageData, setStorageData] = useState<DailyStorageList>({})
@@ -143,6 +147,7 @@ export default function DailyUsage() {
           </Card>
         ))}
       </CardList>
+      <Spacer />
     </>
   )
 }
