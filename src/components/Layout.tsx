@@ -21,7 +21,6 @@ const Container = styled.div`
 
 const Content = styled.div`
   height: 620px;
-  overflow-y: scroll;
 `
 
 const Spacer = styled.div`
