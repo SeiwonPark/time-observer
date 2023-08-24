@@ -173,11 +173,7 @@ export default function WeeklyUsage(props: WeeklyUsageProps) {
           backgroundColor="#e9e9ff"
         />
       </WidgetContainer>
-    <Margin4>
-      <Nav onClick={() => navigate(-1)}>
-        <LeftArrow width={40} />
-      </Nav>
       <Chart data={data} options={options} />
-    </Margin4>
+    </>
   )
 }
