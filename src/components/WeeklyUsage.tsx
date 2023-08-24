@@ -5,6 +5,7 @@ import styled from 'styled-components'
 
 import Check from '../assets/check.svg'
 import Clock from '../assets/clock.svg'
+
 import LeftArrow from '../assets/left_arrow.svg'
 import { getPast7Days, getPast7Dates, formatTime } from '../utils'
 import Chart from './Chart'
@@ -172,7 +173,11 @@ export default function WeeklyUsage(props: WeeklyUsageProps) {
           backgroundColor="#e9e9ff"
         />
       </WidgetContainer>
+    <Margin4>
+      <Nav onClick={() => navigate(-1)}>
+        <LeftArrow width={40} />
+      </Nav>
       <Chart data={data} options={options} />
-    </>
+    </Margin4>
   )
 }
