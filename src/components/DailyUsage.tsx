@@ -12,19 +12,6 @@ const CardList = styled.ul`
   padding-left: 0;
 `
 
-const Tooltip = styled.div`
-  position: absolute;
-  background-color: #000;
-  padding: 5px 10px;
-  border-radius: 5px;
-  z-index: 999;
-  pointer-events: none;
-  transform: translate(-50%, -100%);
-  white-space: nowrap;
-  color: ${COLORS.green};
-  opacity: 0.9;
-`
-
 const Card = styled.li<{ isCurrent?: boolean }>`
   position: relative;
   margin: 8px 4px;
@@ -39,6 +26,22 @@ const Card = styled.li<{ isCurrent?: boolean }>`
 `
 const CardRight = styled.div`
   padding-left: 12px;
+`
+
+const BlackCard = styled.div`
+  background-color: ${COLORS.black};
+  color: ${COLORS.white};
+  border-radius: 12px;
+  padding: 24px 20px;
+`
+
+const CurrentDomain = styled.div`
+  font-size: 16px;
+`
+
+const CurrentTime = styled.div`
+  font-size: 32px;
+  font-weight: 500;
 `
 
 const Domain = styled.span`
@@ -74,7 +77,6 @@ const GrayBack = styled.div`
 export default function DailyUsage() {
   const [currentDomain, setCurrentDomain] = useState<string>()
   const [storageData, setStorageData] = useState<DailyStorageList>({})
-  const [tooltip, setTooltip] = useState<{ content: string; x: number; y: number } | null>(null)
   const today = useMemo(() => formatDate(), [])
   const navigate = useNavigate()
 
@@ -109,45 +111,20 @@ export default function DailyUsage() {
     }
   }, [])
 
-  const handleMouseEnter = (content: string, event: React.MouseEvent) => {
-    setTooltip({
-      content,
-      x: event.clientX + 60,
-      y: event.clientY + 40,
-    })
-  }
-
-  const handleMouseMove = (event: React.MouseEvent) => {
-    if (tooltip) {
-      setTooltip((prev) => ({
-        ...prev!,
-        x: event.clientX + 60,
-        y: event.clientY + 40,
-      }))
-    }
-  }
-
-  const handleMouseLeave = () => {
-    setTooltip(null)
-  }
-
   const sortStorageData = useCallback(sortByTimeSpent, [])
   const sortedStorageData = Object.entries(storageData).sort(sortStorageData)
 
   return (
     <>
-      <div>Current domain: {currentDomain}</div>
+      <BlackCard>
+        <CurrentTime>00:42:21</CurrentTime>
+        <CurrentDomain>{currentDomain}</CurrentDomain>
+      </BlackCard>
+
       <h2>Today</h2>
       <CardList>
         {sortedStorageData.map(([key, value]) => (
-          <Card
-            key={key}
-            isCurrent={key === currentDomain}
-            onClick={() => navigate(key, { state: today })}
-            onMouseEnter={(e) => handleMouseEnter(key, e)}
-            onMouseMove={handleMouseMove}
-            onMouseLeave={handleMouseLeave}
-          >
+          <Card key={key} isCurrent={key === currentDomain} onClick={() => navigate(key, { state: today })}>
             <Pad12>
               <img src={value.favicon} alt="favicon" width="24" height="24" />
             </Pad12>
@@ -162,7 +139,6 @@ export default function DailyUsage() {
             </CardRight>
           </Card>
         ))}
-        {tooltip && <Tooltip style={{ top: tooltip.y, left: tooltip.x }}>{tooltip.content}</Tooltip>}
       </CardList>
     </>
   )
