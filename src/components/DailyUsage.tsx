@@ -44,11 +44,10 @@ const CurrentTime = styled.div`
   font-weight: 500;
 `
 
-const Domain = styled.span`
+const Domain = styled.div`
   font-weight: 500;
   font-size: 14px;
-  text-align: center;
-  width: 120px;
+  width: 240px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -61,6 +60,15 @@ const Pad2 = styled.div`
 const Pad12 = styled.div`
   padding: 12px;
 `
+const GrayBack = styled.div`
+  background-color: ${COLORS.background};
+  padding: 2px 8px;
+  border-radius: 6px;
+  display: inline-flex;
+  flex-shrink: 0;
+  flex-grow: 0;
+  flex-basis: auto;
+`
 const TimeSpent = styled.span`
   font-size: 12px;
   vertical-align: middle;
@@ -68,11 +76,6 @@ const TimeSpent = styled.span`
   display: flex;
   align-items: center;
   flex-direction: row;
-`
-const GrayBack = styled.div`
-  background-color: ${COLORS.background};
-  border-radius: 6px;
-  padding: 2px 8px;
 `
 export default function DailyUsage() {
   const [currentDomain, setCurrentDomain] = useState<string>()
