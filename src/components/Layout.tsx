@@ -4,18 +4,23 @@
 import React, { ReactNode } from 'react'
 
 import styled from 'styled-components'
+import { COLORS } from 'styles/colors'
 
 import { GlobalStyle } from '../styles/globalStyle'
 import BottomNavigator from './BottomNavigator'
 
+const Margin4 = styled.div`
+  margin: 4px;
+`
+
 const Container = styled.div`
-  width: 500px;
+  width: 375px;
   height: 100%;
-  overflow: hidden;
+  margin: 16px;
 `
 
 const Content = styled.div`
-  height: 500px;
+  height: 620px;
   overflow-y: scroll;
 `
 
@@ -26,13 +31,13 @@ const Spacer = styled.div`
 
 export const Layout = ({ children }: { children?: ReactNode }) => {
   return (
-    <>
+    <Margin4>
       <GlobalStyle />
       <Container>
         <Content>{children}</Content>
         <BottomNavigator />
         <Spacer />
       </Container>
-    </>
+    </Margin4>
   )
 }

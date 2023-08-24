@@ -1,4 +1,4 @@
-import { formatDate, getDomainNameFromUrl, handleDatesQueue } from '../utils'
+import { formatDate, getDateDifference, getDomainNameFromUrl, handleDatesQueue } from '../utils'
 
 const DEFAULT_ICON = '/default.png'
 const NOTIFICATION_INTERVAL = 3600 // seconds
@@ -17,6 +17,17 @@ chrome.notifications.create(`notification-welcome`, {
   iconUrl: DEFAULT_ICON,
   title: '🎉 Welcome!',
   message: 'Want to see detailed features? Please check https://github.com/seiwon-yaehee/time-observer 👈',
+})
+chrome.storage.local.set({
+  notifications: [
+    {
+      date: formatDate(),
+      domain: 'Welcome',
+      timeSpent: 0,
+      favicon: DEFAULT_ICON,
+      timestamp: Date.now(),
+    },
+  ],
 })
 
 /**
@@ -88,6 +99,16 @@ async function setTimeInterval(activeTabId: number | null, second: number = 1): 
 async function saveTime(domain: string, favicon: string, second: number): Promise<void> {
   const today = formatDate()
   const data: WeeklyStorageData = await chrome.storage.local.get([today])
+  const notificationData = await chrome.storage.local.get('notifications')
+  const notifications: TimeNotification[] = notificationData.notifications || []
+  let notification: TimeNotification = {
+    date: '',
+    domain: '',
+    timeSpent: 0,
+    favicon: '',
+    timestamp: 0,
+  }
+
   data[today] = data[today] === undefined ? {} : data[today]
 
   const previousData: DailyStorageItem =
@@ -101,13 +122,17 @@ async function saveTime(domain: string, favicon: string, second: number): Promis
   await chrome.storage.local.set(data)
 
   const currentTimeSpent = data[today][domain].timeSpent
-  if (currentTimeSpent % NOTIFICATION_INTERVAL === 0) {
-    sendNotification(domain, currentTimeSpent)
+
+  if (currentTimeSpent !== 0 && currentTimeSpent % NOTIFICATION_INTERVAL === 0) {
+    notification = sendNotification(domain, currentTimeSpent, previousData.favicon || DEFAULT_ICON)
+    notifications.push(notification)
+    await chrome.storage.local.set({ notifications: notifications })
   }
 
   const dateExpired = handleDatesQueue(today, datesQueue)
   if (dateExpired && dateExpired !== '') {
     removeExpiredDate(dateExpired)
+    await removeExpiredNotification()
   }
 }
 
@@ -125,12 +150,33 @@ async function removeExpiredDate(dateExpired: string): Promise<void> {
  * Sends a notification
  * @param {string} domain - Domain name
  * @param {number} currentTimeSpent - The time spent on the domain
+ * @param {string} favicon - Favicon URL
  */
-function sendNotification(domain: string, currentTimeSpent: number): void {
+function sendNotification(domain: string, currentTimeSpent: number, favicon: string): TimeNotification {
   chrome.notifications.create(`notification-${Date.now()}`, {
     type: 'basic',
     iconUrl: DEFAULT_ICON,
     title: domain,
-    message: 'You have spent ' + currentTimeSpent + 'seconds on ' + domain,
+    message: `You have spent ${currentTimeSpent} seconds on ${domain}`,
   })
+
+  return {
+    date: formatDate(),
+    domain: domain,
+    timeSpent: currentTimeSpent,
+    favicon: favicon,
+    timestamp: Date.now(),
+  }
+}
+
+/**
+ * Remove notification that has exceeded more than
+ */
+async function removeExpiredNotification(): Promise<void> {
+  const notificationData = await chrome.storage.local.get('notifications')
+  const notifications = notificationData.notifications || []
+  const filteredNotifications = notifications.filter(
+    (notification: TimeNotification) => getDateDifference(notification.date, formatDate()) > 7
+  )
+  await chrome.storage.local.set({ notifications: filteredNotifications })
 }

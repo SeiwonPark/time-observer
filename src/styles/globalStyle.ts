@@ -4,15 +4,24 @@
  */
 import { createGlobalStyle } from 'styled-components'
 
+import { COLORS } from './colors'
+
 export const GlobalStyle = createGlobalStyle`
+  
+  @import url('https://fonts.googleapis.com/css2?family=Rubik&display=swap');
+
   body {
     margin: 0;
     padding: 0;
+    font-family: 'Rubik', sans-serif;
+    background-color: ${COLORS.background};
+
   }
 
   /* Scrollbar Style */
   ::-webkit-scrollbar {
     width: 10px;
+    height: 10px;
   }
 
   ::-webkit-scrollbar-track {
