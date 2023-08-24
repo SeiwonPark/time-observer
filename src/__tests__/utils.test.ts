@@ -25,7 +25,7 @@ describe('Utils Test', () => {
 
   it('formatTime returns formatted time', () => {
     const time = formatTime(3662)
-    expect(time.trim()).toBe('01h 01m 02s')
+    expect(time.trim()).toBe('01:01:02')
   })
 
   it('getPast7Days returns an array of the past 7 dates including today in order', () => {

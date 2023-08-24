@@ -57,6 +57,7 @@ interface WeeklyUsageProps {
 export default function WeeklyUsage({ endpoint, today }: WeeklyUsageProps) {
   const [past7Days, setPast7Days] = useState<string[]>([])
   const [past7DaysData, setPast7DaysData] = useState<DailyStorageItem[]>()
+  const [totalTime, setTotalTime] = useState<number>(0)
   const labels = getPast7Dates()
   const navigate = useNavigate()
 
@@ -75,8 +76,19 @@ export default function WeeklyUsage({ endpoint, today }: WeeklyUsageProps) {
         }
       })
       setPast7DaysData(pastData)
+      saveTotalTime(result)
     })
   }, [past7Days, endpoint])
+
+  const saveTotalTime = (result: WeeklyStorageData) => {
+    let tempTotalTime = 0
+    for (let day of past7Days) {
+      for (let domain in result[day]) {
+        tempTotalTime += result[day][domain].timeSpent
+      }
+    }
+    setTotalTime(tempTotalTime)
+  }
 
   const getWeekTotal = (data: DailyStorageItem[] | undefined): number => {
     if (!data) return 0
@@ -159,8 +171,8 @@ export default function WeeklyUsage({ endpoint, today }: WeeklyUsageProps) {
       <WidgetContainer>
         <Widget
           Icon={Check}
-          title="Success Rate"
-          content={getWeekTotal(past7DaysData)}
+          title="Viewer Ratings"
+          content={~~((getWeekTotal(past7DaysData) * 100) / totalTime).toFixed(2)}
           unit="percent"
           backgroundColor="#e1f6e6"
         />
