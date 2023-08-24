@@ -5,7 +5,6 @@ import styled from 'styled-components'
 
 import Check from '../assets/check.svg'
 import Clock from '../assets/clock.svg'
-
 import LeftArrow from '../assets/left_arrow.svg'
 import { getPast7Days, getPast7Dates, formatTime } from '../utils'
 import Chart from './Chart'
@@ -55,20 +54,20 @@ interface WeeklyUsageProps {
   today: string
 }
 
-export default function WeeklyUsage(props: WeeklyUsageProps) {
+export default function WeeklyUsage({ endpoint, today }: WeeklyUsageProps) {
   const [past7Days, setPast7Days] = useState<string[]>([])
   const [past7DaysData, setPast7DaysData] = useState<DailyStorageItem[]>()
   const labels = getPast7Dates()
   const navigate = useNavigate()
 
   useEffect(() => {
-    setPast7Days(getPast7Days(props.today))
+    setPast7Days(getPast7Days(today))
   }, [])
 
   useEffect(() => {
     chrome.storage.local.get(null, (result: WeeklyStorageData) => {
       const pastData: DailyStorageItem[] = past7Days.map((day: string) => {
-        const dayData = result[day] && result[day][props.endpoint]
+        const dayData = result[day] && result[day][endpoint]
         return {
           date: day,
           timeSpent: dayData ? dayData.timeSpent : 0,
@@ -77,7 +76,7 @@ export default function WeeklyUsage(props: WeeklyUsageProps) {
       })
       setPast7DaysData(pastData)
     })
-  }, [past7Days, props.endpoint])
+  }, [past7Days, endpoint])
 
   const getWeekTotal = (data: DailyStorageItem[] | undefined): number => {
     if (!data) return 0
@@ -127,7 +126,7 @@ export default function WeeklyUsage(props: WeeklyUsageProps) {
       },
       title: {
         display: true,
-        text: `Time you spent on ${props.endpoint} for the past week`,
+        text: `Time you spent on ${endpoint} for the past week`,
       },
     },
     scales: {
@@ -155,7 +154,7 @@ export default function WeeklyUsage(props: WeeklyUsageProps) {
         <Title>Weekly Usage</Title>
       </Header>
       <Margin16>
-        <Domain>{props.endpoint}</Domain>
+        <Domain>{endpoint}</Domain>
       </Margin16>
       <WidgetContainer>
         <Widget
