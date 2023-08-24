@@ -5,17 +5,14 @@ import styled from 'styled-components'
 import Stopwatch from '../assets/stopwatch.svg'
 import { formatDate, formatTime, getPast7Days } from '../utils'
 
-const Header = styled.header`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: flex-start;
-`
-
-const Title = styled.span`
-  padding: 8px;
-  font-size: 28px;
-  font-weight: 600;
+const Title = styled.h1`
+  display: block;
+  font-size: 2em;
+  margin-block-start: 0.67em;
+  margin-block-end: 0.67em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+  font-weight: bold;
 `
 
 const CardList = styled.ul`
@@ -24,11 +21,11 @@ const CardList = styled.ul`
 `
 
 const DateTitle = styled.h2`
-  padding: 10px 8px 0;
+  padding: 10px 0;
 `
 
 const Card = styled.li`
-  margin: 8px 4px;
+  margin: 8px 0;
   padding: 12px 8px;
   display: flex;
   justify-content: center;
@@ -97,9 +94,7 @@ export default function NotificationList() {
 
   return (
     <>
-      <Header>
-        <Title>Notifications</Title>
-      </Header>
+      <Title>Notifications</Title>
       {Object.keys(groupedNotifications).length === 0 ? (
         <span>No notifications found.</span>
       ) : (
