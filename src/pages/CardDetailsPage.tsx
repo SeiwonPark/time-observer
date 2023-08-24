@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react'
 
-import WeeklyUsage from 'components/WeeklyUsage'
 import { useLocation } from 'react-router-dom'
 
 import { Layout } from '../components/Layout'
+import WeeklyUsage from '../components/WeeklyUsage'
 
 export default function CardDetailsPage() {
   const [endpoint, setEndpoint] = useState<string>('')

@@ -1,8 +1,7 @@
 import React from 'react'
 
-import NotificationList from 'components/NotificationList'
-
 import { Layout } from '../components/Layout'
+import NotificationList from '../components/NotificationList'
 
 export default function NotificationsPage() {
   return (
