@@ -98,23 +98,22 @@ export default function NotificationList() {
   const [toggled, setToggled] = useState<boolean>(false)
 
   useEffect(() => {
-    chrome.storage.local.get('notifications', (data) => {
+    chrome.storage.local.get('notifications', (data: WeeklyTimeNotification) => {
       if (data.notifications) {
-        const groups = data.notifications.reduce(
-          (weeklyNotifications: WeeklyTimeNotification, dailyNotification: TimeNotification) => {
+        const groups = data.notifications
+          .sort((a: TimeNotification, b: TimeNotification) => a.timestamp - b.timestamp)
+          .reduce((weeklyNotifications: WeeklyTimeNotification, dailyNotification: TimeNotification) => {
             weeklyNotifications[dailyNotification.date] = weeklyNotifications[dailyNotification.date] || []
             weeklyNotifications[dailyNotification.date].push(dailyNotification)
             return weeklyNotifications
-          },
-          {}
-        )
+          }, {})
         setGroupedNotifications(groups)
       }
     })
   }, [])
 
   const removeNotification = (date: string, domain: string, timeSpent: number) => {
-    chrome.storage.local.get('notifications', (data) => {
+    chrome.storage.local.get('notifications', (data: WeeklyTimeNotification) => {
       if (data.notifications) {
         const updatedNotifications = data.notifications.filter(
           (notification: TimeNotification) =>
@@ -161,27 +160,30 @@ export default function NotificationList() {
                   ) : (
                     <DateTitle>{`Last ${getFullDateString(day)}`}</DateTitle>
                   )}
-                  {dayNotifications.map((notification: TimeNotification, index: number) => (
-                    <Card key={index}>
-                      {toggled && (
-                        <CloseButton
-                          onClick={() =>
-                            removeNotification(notification.date, notification.domain, notification.timeSpent)
-                          }
-                        />
-                      )}
-                      <CardContent>
-                        <Favicon src={notification.favicon} alt="favicon" width="20" height="20" />
-                        <CardDetail>
-                          <Domain>{notification.domain}</Domain>
-                          <Badge>
-                            <Stopwatch color="#636363" width="20" height="20" />
-                            {formatTime(notification.timeSpent)}
-                          </Badge>
-                        </CardDetail>
-                      </CardContent>
-                    </Card>
-                  ))}
+                  {dayNotifications
+                    .slice()
+                    .reverse()
+                    .map((notification: TimeNotification, index: number) => (
+                      <Card key={index}>
+                        {toggled && (
+                          <CloseButton
+                            onClick={() =>
+                              removeNotification(notification.date, notification.domain, notification.timeSpent)
+                            }
+                          />
+                        )}
+                        <CardContent>
+                          <Favicon src={notification.favicon} alt="favicon" width="20" height="20" />
+                          <CardDetail>
+                            <Domain>{notification.domain}</Domain>
+                            <Badge>
+                              <Stopwatch color="#636363" width="20" height="20" />
+                              {formatTime(notification.timeSpent)}
+                            </Badge>
+                          </CardDetail>
+                        </CardContent>
+                      </Card>
+                    ))}
                 </CardList>
               )
             }
