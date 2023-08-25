@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { ChangeEvent } from 'react'
 
 import styled from 'styled-components'
 
@@ -52,11 +52,15 @@ interface ToggleButtonProps {
 }
 
 export default function ToggleButton({ toggle }: ToggleButtonProps) {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    toggle(e.target.checked)
+  }
+
   return (
     <Container>
       <Switch>
-        <Input onChange={(e) => toggle(e.target.checked)} />
-        <Slider className="round" />
+        <Input onChange={handleChange} />
+        <Slider />
       </Switch>
     </Container>
   )
