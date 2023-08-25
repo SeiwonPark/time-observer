@@ -93,3 +93,15 @@ export const getDateDifference = (date1: string, date2: string): number => {
   const diffMilliseconds = Math.abs(new Date(date1).getTime() - new Date(date2).getTime())
   return ~~(diffMilliseconds / (24 * 60 * 60 * 1000))
 }
+
+/**
+ * Gets the full date name out of given date string.
+ * @param {string} day - `YYYY-MM-DD` format date string.
+ * @returns Full date name of the day.
+ * @example
+ * // Returns "Saturday"
+ * getFullDateString('2023-07-08')
+ */
+export const getFullDateString = (day: string): string => {
+  return new Date(day).toLocaleDateString('en-US', { weekday: 'long' })
+}
