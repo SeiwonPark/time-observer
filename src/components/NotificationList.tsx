@@ -2,30 +2,45 @@ import React, { useEffect, useState } from 'react'
 
 import styled from 'styled-components'
 
+import Close from '../assets/close.svg'
 import Stopwatch from '../assets/stopwatch.svg'
-import { formatDate, formatTime, getPast7Days } from '../utils'
+import { formatDate, formatTime, getFullDateString, getPast7Days } from '../utils'
+import ToggleButton from './ToggleButton'
 
-const Title = styled.h1`
-  display: block;
-  font-size: 2em;
-  margin-block-start: 0.67em;
-  margin-block-end: 0.67em;
-  margin-inline-start: 0px;
-  margin-inline-end: 0px;
-  font-weight: bold;
+const EmptyText = styled.span`
+  height: 80%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  color: #999999;
 `
+
+const TitleContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+`
+
+const EditText = styled.span`
+  margin-left: auto;
+  font-size: 14px;
+  font-weight: 400;
+  color: #999999;
+`
+
+const Title = styled.h1``
 
 const CardList = styled.ul`
   list-style-type: none;
   padding-left: 0;
 `
 
-const DateTitle = styled.h2`
-  padding: 10px 0;
-`
+const DateTitle = styled.h2``
 
 const Card = styled.li`
-  margin: 8px 0;
+  position: relative;
+  margin: 8px 4px;
   padding: 12px 8px;
   display: flex;
   justify-content: center;
@@ -33,6 +48,15 @@ const Card = styled.li`
   flex-direction: column;
   background-color: #fff;
   border-radius: 12px;
+`
+
+const CloseButton = styled(Close)`
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  padding: 4px;
+  top: -5px;
+  right: -7px;
   cursor: pointer;
 `
 
@@ -73,30 +97,60 @@ const Badge = styled.div`
   background-color: #f5f5f5;
 `
 
+const Spacer = styled.div`
+  width: 100%;
+  height: 80px;
+`
+
 export default function NotificationList() {
   const [groupedNotifications, setGroupedNotifications] = useState<WeeklyTimeNotification>({})
+  const [toggled, setToggled] = useState<boolean>(false)
 
   useEffect(() => {
-    chrome.storage.local.get('notifications', (data) => {
+    chrome.storage.local.get('notifications', (data: WeeklyTimeNotification) => {
       if (data.notifications) {
-        const groups = data.notifications.reduce(
-          (weeklyNotifications: WeeklyTimeNotification, dailyNotification: TimeNotification) => {
+        const groups = data.notifications
+          .sort((a: TimeNotification, b: TimeNotification) => a.timestamp - b.timestamp)
+          .reduce((weeklyNotifications: WeeklyTimeNotification, dailyNotification: TimeNotification) => {
             weeklyNotifications[dailyNotification.date] = weeklyNotifications[dailyNotification.date] || []
             weeklyNotifications[dailyNotification.date].push(dailyNotification)
             return weeklyNotifications
-          },
-          {}
-        )
+          }, {})
         setGroupedNotifications(groups)
       }
     })
   }, [])
 
+  const removeNotification = (date: string, domain: string, timeSpent: number) => {
+    chrome.storage.local.get('notifications', (data: WeeklyTimeNotification) => {
+      if (data.notifications) {
+        const updatedNotifications = data.notifications.filter(
+          (notification: TimeNotification) =>
+            !(notification.date === date && notification.domain === domain && notification.timeSpent === timeSpent)
+        )
+
+        chrome.storage.local.set({ notifications: updatedNotifications }, () => {
+          const updatedGroups = { ...groupedNotifications }
+          updatedGroups[date] = updatedGroups[date].filter(
+            (notification: TimeNotification) =>
+              !(notification.domain === domain && notification.timeSpent === timeSpent)
+          )
+
+          if (updatedGroups[date].length === 0) {
+            delete updatedGroups[date]
+          }
+
+          setGroupedNotifications(updatedGroups)
+        })
+      }
+    })
+  }
+
   return (
     <>
       <Title>Notifications</Title>
       {Object.keys(groupedNotifications).length === 0 ? (
-        <span>No notifications found.</span>
+        <EmptyText>All messages are read.</EmptyText>
       ) : (
         getPast7Days(formatDate())
           .reverse()
@@ -106,31 +160,46 @@ export default function NotificationList() {
             if (dayNotifications && dayNotifications.length > 0) {
               return (
                 <CardList key={index}>
-                  <DateTitle>
-                    {day === new Date().toISOString().split('T')[0]
-                      ? 'Today'
-                      : `Last ${new Date(day).toLocaleDateString('en-US', { weekday: 'long' })}`}
-                  </DateTitle>
-                  {dayNotifications.reverse().map((notification: TimeNotification, index: number) => (
-                    <Card key={index}>
-                      <CardContent>
-                        <Favicon src={notification.favicon} alt="favicon" width="20" height="20" />
-                        <CardDetail>
-                          <Domain>{notification.domain}</Domain>
-                          <Badge>
-                            <Stopwatch color="#636363" width="20" height="20" />
-                            {formatTime(notification.timeSpent)}
-                          </Badge>
-                        </CardDetail>
-                      </CardContent>
-                    </Card>
-                  ))}
+                  {day === new Date().toISOString().split('T')[0] ? (
+                    <TitleContainer>
+                      <DateTitle>Today</DateTitle>
+                      <EditText>Edit</EditText>
+                      <ToggleButton toggle={setToggled} />
+                    </TitleContainer>
+                  ) : (
+                    <DateTitle>{`Last ${getFullDateString(day)}`}</DateTitle>
+                  )}
+                  {dayNotifications
+                    .slice()
+                    .reverse()
+                    .map((notification: TimeNotification, index: number) => (
+                      <Card key={index}>
+                        {toggled && (
+                          <CloseButton
+                            onClick={() =>
+                              removeNotification(notification.date, notification.domain, notification.timeSpent)
+                            }
+                          />
+                        )}
+                        <CardContent>
+                          <Favicon src={notification.favicon} alt="favicon" width="20" height="20" />
+                          <CardDetail>
+                            <Domain>{notification.domain}</Domain>
+                            <Badge>
+                              <Stopwatch color="#636363" width="20" height="20" />
+                              {formatTime(notification.timeSpent)}
+                            </Badge>
+                          </CardDetail>
+                        </CardContent>
+                      </Card>
+                    ))}
                 </CardList>
               )
             }
             return null
           })
       )}
+      <Spacer />
     </>
   )
 }

@@ -127,7 +127,6 @@ export default function DailyUsage() {
         <CurrentTime>{currentDomain ? formatTime(storageData[currentDomain]?.timeSpent) : 0}</CurrentTime>
         <CurrentDomain>{currentDomain}</CurrentDomain>
       </BlackCard>
-
       <h2>Today</h2>
       <CardList>
         {sortedStorageData.map(([key, value]) => (
