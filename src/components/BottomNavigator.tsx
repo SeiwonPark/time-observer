@@ -5,10 +5,10 @@ import styled from 'styled-components'
 
 import IconAlertFill from '../assets/alert_fill.svg'
 import IconAlertOutline from '../assets/alert_outline.svg'
+import IconCalendarFill from '../assets/calendar_fill.svg'
 import IconCalendarOutline from '../assets/calendar_outline.svg'
-import IconCalendarFill from '../assets/calender_fill.svg'
-import IconTimeOutline from '../assets/time-outline.svg'
 import IconTimeFill from '../assets/time_fill.svg'
+import IconTimeOutline from '../assets/time_outline.svg'
 import { COLORS } from '../styles/colors'
 
 const Nav = styled.nav`
