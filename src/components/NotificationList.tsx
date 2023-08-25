@@ -7,6 +7,15 @@ import Stopwatch from '../assets/stopwatch.svg'
 import { formatDate, formatTime, getFullDateString, getPast7Days } from '../utils'
 import ToggleButton from './ToggleButton'
 
+const EmptyText = styled.span`
+  height: 80%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  color: #999999;
+`
+
 const TitleContainer = styled.div`
   display: flex;
   flex-direction: row;
@@ -141,7 +150,7 @@ export default function NotificationList() {
     <>
       <Title>Notifications</Title>
       {Object.keys(groupedNotifications).length === 0 ? (
-        <span>No notifications found.</span>
+        <EmptyText>All messages are read.</EmptyText>
       ) : (
         getPast7Days(formatDate())
           .reverse()
