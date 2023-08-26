@@ -153,11 +153,13 @@ async function removeExpiredDate(dateExpired: string): Promise<void> {
  * @param {string} favicon - Favicon URL
  */
 function sendNotification(domain: string, currentTimeSpent: number, favicon: string): TimeNotification {
+  const time = currentTimeSpent / NOTIFICATION_INTERVAL
+
   chrome.notifications.create(`notification-${Date.now()}`, {
     type: 'basic',
     iconUrl: DEFAULT_ICON,
     title: domain,
-    message: `You have spent ${currentTimeSpent} seconds on ${domain}`,
+    message: `You have spent ${time} ${time === 1 ? 'hour' : 'hours'} on ${domain}`,
   })
 
   return {
