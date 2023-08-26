@@ -29,8 +29,6 @@ const EditText = styled.span`
   color: #999999;
 `
 
-const Title = styled.h1``
-
 const CardList = styled.ul`
   list-style-type: none;
   padding-left: 0;
@@ -148,7 +146,6 @@ export default function NotificationList() {
 
   return (
     <>
-      <Title>Notifications</Title>
       {Object.keys(groupedNotifications).length === 0 ? (
         <EmptyText>All messages are read.</EmptyText>
       ) : (
