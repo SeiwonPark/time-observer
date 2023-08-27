@@ -1,24 +1,39 @@
 {
   "manifest_version": 3,
   "name": "time-observer",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "A notifier for web usages",
   "icons": {
-    "16": "assets/icon16.png",
-    "32": "assets/icon32.png",
-    "64": "assets/icon64.png",
-    "128": "assets/icon128.png",
-    "256": "assets/icon256.png"
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "64": "icons/icon64.png",
+    "128": "icons/icon128.png",
+    "256": "icons/icon256.png"
   },
-  "web_accessible_resources": [
+  "permissions": [
+    "tabs",
+    "storage",
+    "activeTab",
+    "notifications"
+  ],
+  "action": {
+    "default_popup": "index.html"
+  },
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "content_scripts": [
     {
-      "resources": [],
-      "matches": ["<all_urls>"]
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "content.js"
+      ]
     }
   ],
-  "permissions": [],
-  "background": {
-    "service_worker": "background.js"
-  },
-  "host_permissions": []
+  "host_permissions": [
+    "<all_urls>"
+  ]
 }

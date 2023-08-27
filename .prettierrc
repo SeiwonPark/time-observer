@@ -4,5 +4,13 @@
   "useTabs": false,
   "tabWidth": 2,
   "printWidth": 120,
-  "arrowParens": "always"
+  "arrowParens": "always",
+  "importOrderCaseInsensitive": true,
+  "importOrder": [
+    "^react$",
+    "^react-dom$",
+    "<THIRD_PARTY_MODULES>",
+    "^[./]"
+  ],
+  "importOrderSeparation": true
 }
