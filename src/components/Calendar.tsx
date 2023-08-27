@@ -104,7 +104,7 @@ const EmojiText = styled.span`
 `
 
 export default function Calendar() {
-  const THEME = { level0: '😃', level1: '🙂', level2: '😕', level3: '😢', level4: '🫥' }
+  const THEME = { level0: '🫥', level1: '😃', level2: '🙂', level3: '😕', level4: '😢' }
   const [calendarData, setCalendarData] = useState<CalendarData[]>([])
   const [threshold, setThreshold] = useState<number>(3)
   const [levelCounts, setLevelCounts] = useState<{ [key: number]: number }>({ 0: 0, 1: 0, 2: 0, 3: 0, 4: 0 })
