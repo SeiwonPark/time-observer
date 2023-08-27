@@ -108,7 +108,7 @@ export default function Calendar() {
   const today = formatDate()
   const [calendarData, setCalendarData] = useState<CalendarData[]>([])
   const [threshold, setThreshold] = useState<number>(3)
-  const [levelCounts, setLevelCounts] = useState<{ [key: number]: number }>({ 0: 0, 1: 0, 2: 0, 3: 0, 4: 0 })
+  const [levelCounts, setLevelCounts] = useState<{ [key: number]: number }>({ 0: -1, 1: 0, 2: 0, 3: 0, 4: 0 })
 
   useEffect(() => {
     chrome.storage.local.get('calendar', (data) => {
@@ -120,7 +120,7 @@ export default function Calendar() {
   }, [threshold, today])
 
   const transformCalendarData = (data: CalendarStorageData) => {
-    const levelCount: { [key: number]: number } = { 0: 0, 1: 0, 2: 0, 3: 0, 4: 0 }
+    const levelCount: { [key: number]: number } = { 0: -1, 1: 0, 2: 0, 3: 0, 4: 0 }
 
     const transformedData = Object.keys(data).map((date: string) => {
       let level = 0
