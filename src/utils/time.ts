@@ -8,7 +8,7 @@
  */
 export const formatDate = (date: Date = new Date()): string => {
   const localTime = new Date(date.getTime()).toLocaleDateString().split('/')
-  return `${localTime[2]}-${String(localTime[0].padStart(2, '0'))}-${String(localTime[1].padStart(2, '0'))}`
+  return `${localTime[2]}-${String(localTime[0]).padStart(2, '0')}-${String(localTime[1]).padStart(2, '0')}`
 }
 
 /**
