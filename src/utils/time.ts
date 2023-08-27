@@ -7,7 +7,7 @@
  * formatDate()
  */
 export const formatDate = (date: Date = new Date()): string => {
-  return new Date(date.getTime() - date.getTimezoneOffset() * 60000).toISOString().split('T')[0]
+  return new Date(date.getTime()).toISOString().split('T')[0]
 }
 
 /**
@@ -104,4 +104,8 @@ export const getDateDifference = (date1: string, date2: string): number => {
  */
 export const getFullDateString = (day: string): string => {
   return new Date(day).toLocaleDateString('en-US', { weekday: 'long' })
+}
+
+export const get100DaysBefore = (): string => {
+  return new Date().getTime() - 
 }
