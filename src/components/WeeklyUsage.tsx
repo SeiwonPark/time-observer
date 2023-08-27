@@ -82,8 +82,8 @@ export default function WeeklyUsage({ endpoint, today }: WeeklyUsageProps) {
 
   const saveTotalTime = (result: WeeklyStorageData) => {
     let tempTotalTime = 0
-    for (let day of past7Days) {
-      for (let domain in result[day]) {
+    for (const day of past7Days) {
+      for (const domain in result[day]) {
         tempTotalTime += result[day][domain].timeSpent
       }
     }

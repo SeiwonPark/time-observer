@@ -7,7 +7,7 @@
  * formatDate()
  */
 export const formatDate = (date: Date = new Date()): string => {
-  return new Date(date.getTime() - date.getTimezoneOffset() * 60000).toISOString().split('T')[0]
+  return new Date(date.getTime()).toISOString().split('T')[0]
 }
 
 /**
@@ -104,4 +104,15 @@ export const getDateDifference = (date1: string, date2: string): number => {
  */
 export const getFullDateString = (day: string): string => {
   return new Date(day).toLocaleDateString('en-US', { weekday: 'long' })
+}
+
+/**
+ * Gets the date string by the number of days before of the starting date.
+ * @param {number} day - The number of days before the starting date.
+ * @param {string | Date} from - The starting date to calculate from.
+ * @returns {string} The date string formatted `YYYY-MM-DD`.
+ */
+export const getDaysBefore = (day: number, from: string | Date = new Date()): string => {
+  const date = new Date(from)
+  return new Date(date.getTime() - day * 24 * 60 * 60 * 1000).toISOString().split('T')[0]
 }
