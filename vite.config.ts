@@ -1,3 +1,4 @@
+/* eslint-disable */
 import reactRefresh from '@vitejs/plugin-react-refresh'
 import react from '@vitejs/plugin-react-swc'
 import path from 'path'
@@ -6,6 +7,7 @@ import cssInjectedByJsPlugin from 'vite-plugin-css-injected-by-js'
 import svgr from 'vite-plugin-svgr'
 import tsconfigPaths from 'vite-tsconfig-paths'
 
+/* eslint-enable */
 export default defineConfig({
   plugins: [
     react({ plugins: [['@swc/plugin-styled-components', {}]] }),
