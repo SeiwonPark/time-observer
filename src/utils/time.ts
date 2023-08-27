@@ -115,5 +115,5 @@ export const getFullDateString = (day: string): string => {
  */
 export const getDaysBefore = (day: number, from: string | Date = new Date()): string => {
   const date = new Date(from)
-  return new Date(date.getTime() - day * 24 * 60 * 60 * 1000).toISOString().split('T')[0]
+  return formatDate(new Date(date.getTime() - day * 24 * 60 * 60 * 1000))
 }

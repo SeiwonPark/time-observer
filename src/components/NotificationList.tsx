@@ -101,6 +101,7 @@ const Spacer = styled.div`
 `
 
 export default function NotificationList() {
+  const today = formatDate()
   const [groupedNotifications, setGroupedNotifications] = useState<WeeklyTimeNotification>({})
   const [toggled, setToggled] = useState<boolean>(false)
 
@@ -117,7 +118,7 @@ export default function NotificationList() {
         setGroupedNotifications(groups)
       }
     })
-  }, [])
+  }, [today])
 
   const removeNotification = (date: string, domain: string, timeSpent: number) => {
     chrome.storage.local.get('notifications', (data: WeeklyTimeNotification) => {
@@ -157,7 +158,7 @@ export default function NotificationList() {
             if (dayNotifications && dayNotifications.length > 0) {
               return (
                 <CardList key={index}>
-                  {day === new Date().toISOString().split('T')[0] ? (
+                  {day === today ? (
                     <TitleContainer>
                       <DateTitle>Today</DateTitle>
                       <EditText>Edit</EditText>

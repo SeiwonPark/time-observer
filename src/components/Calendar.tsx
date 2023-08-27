@@ -13,7 +13,13 @@ const TitleContainer = styled.div`
   align-items: center;
 `
 
-const Title = styled.h3``
+const Title = styled.h3`
+  user-select: none;
+  user-drag: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -webkit-user-drag: none;
+`
 
 const Wrapper = styled.div`
   border-radius: 20px;
@@ -86,6 +92,11 @@ const SlotText = styled.span`
   padding: 4px;
   font-size: 20px;
   font-weight: bold;
+  user-select: none;
+  user-drag: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -webkit-user-drag: none;
 `
 
 const EmojiGroup = styled.ul`
@@ -96,6 +107,11 @@ const EmojiGroup = styled.ul`
 
 const Emoji = styled.li`
   padding: 4px;
+  user-select: none;
+  user-drag: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -webkit-user-drag: none;
 `
 
 const EmojiText = styled.span`
@@ -108,7 +124,7 @@ export default function Calendar() {
   const today = formatDate()
   const [calendarData, setCalendarData] = useState<CalendarData[]>([])
   const [threshold, setThreshold] = useState<number>(3)
-  const [levelCounts, setLevelCounts] = useState<{ [key: number]: number }>({ 0: -1, 1: 0, 2: 0, 3: 0, 4: 0 })
+  const [levelCounts, setLevelCounts] = useState<{ [key: number]: number }>({ 0: 0, 1: 0, 2: 0, 3: 0, 4: 0 })
 
   useEffect(() => {
     chrome.storage.local.get('calendar', (data) => {
@@ -120,7 +136,7 @@ export default function Calendar() {
   }, [threshold, today])
 
   const transformCalendarData = (data: CalendarStorageData) => {
-    const levelCount: { [key: number]: number } = { 0: -1, 1: 0, 2: 0, 3: 0, 4: 0 }
+    const levelCount: { [key: number]: number } = { 0: 0, 1: 0, 2: 0, 3: 0, 4: 0 }
 
     const transformedData = Object.keys(data).map((date: string) => {
       let level = 0
@@ -195,7 +211,7 @@ export default function Calendar() {
         <Emoji>
           {THEME.level0}
           <EmojiText>
-            Less than {threshold} hours, {levelCounts[0]} days
+            Less than {threshold} hours, {Math.min(100, levelCounts[0])} days
           </EmojiText>
         </Emoji>
         <Emoji>
