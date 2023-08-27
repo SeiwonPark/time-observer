@@ -18,7 +18,7 @@ chrome.notifications.create('notification-welcome', {
   type: 'basic',
   iconUrl: DEFAULT_ICON,
   title: '🎉 Welcome!',
-  message: 'Want to see detailed features? Please check https://github.com/seiwon-yaehee/time-observer 👈',
+  message: 'Want to see detailed features? Please check https://github.com/encaffeine/time-observer 👈',
 })
 chrome.storage.local.set({
   notifications: [
