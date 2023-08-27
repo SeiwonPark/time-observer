@@ -167,30 +167,27 @@ export default function NotificationList() {
                   ) : (
                     <DateTitle>{`Last ${getFullDateString(day)}`}</DateTitle>
                   )}
-                  {dayNotifications
-                    .slice()
-                    .reverse()
-                    .map((notification: TimeNotification, index: number) => (
-                      <Card key={index}>
-                        {toggled && (
-                          <CloseButton
-                            onClick={() =>
-                              removeNotification(notification.date, notification.domain, notification.timeSpent)
-                            }
-                          />
-                        )}
-                        <CardContent>
-                          <Favicon src={notification.favicon} alt="favicon" width="20" height="20" />
-                          <CardDetail>
-                            <Domain>{notification.domain}</Domain>
-                            <Badge>
-                              <Stopwatch color="#636363" width="20" height="20" />
-                              {formatTime(notification.timeSpent)}
-                            </Badge>
-                          </CardDetail>
-                        </CardContent>
-                      </Card>
-                    ))}
+                  {dayNotifications.reverse().map((notification: TimeNotification, index: number) => (
+                    <Card key={index}>
+                      {toggled && (
+                        <CloseButton
+                          onClick={() =>
+                            removeNotification(notification.date, notification.domain, notification.timeSpent)
+                          }
+                        />
+                      )}
+                      <CardContent>
+                        <Favicon src={notification.favicon} alt="favicon" width="20" height="20" />
+                        <CardDetail>
+                          <Domain>{notification.domain}</Domain>
+                          <Badge>
+                            <Stopwatch color="#636363" width="20" height="20" />
+                            {formatTime(notification.timeSpent)}
+                          </Badge>
+                        </CardDetail>
+                      </CardContent>
+                    </Card>
+                  ))}
                 </CardList>
               )
             }
