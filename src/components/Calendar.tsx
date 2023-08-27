@@ -119,7 +119,7 @@ export default function Calendar() {
   }, [threshold])
 
   const transformCalendarData = (data: CalendarStorageData) => {
-    const newLevelCounts: { [key: number]: number } = { 0: 0, 1: 0, 2: 0, 3: 0, 4: 0 }
+    const levelCount: { [key: number]: number } = { 0: 0, 1: 0, 2: 0, 3: 0, 4: 0 }
 
     const transformedData = Object.keys(data).map((date: string) => {
       let level = 0
@@ -135,7 +135,7 @@ export default function Calendar() {
         level = 4
       }
 
-      newLevelCounts[level] = (newLevelCounts[level] || 0) + 1
+      levelCount[level] = (levelCount[level] || 0) + 1
 
       return {
         [date]: {
@@ -144,7 +144,7 @@ export default function Calendar() {
       }
     })
 
-    setLevelCounts(newLevelCounts)
+    setLevelCounts(levelCount)
 
     return transformedData
   }
