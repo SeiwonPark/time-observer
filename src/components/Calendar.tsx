@@ -105,6 +105,7 @@ const EmojiText = styled.span`
 
 export default function Calendar() {
   const THEME = { level0: '🫥', level1: '😃', level2: '🙂', level3: '😕', level4: '😢' }
+  const today = formatDate()
   const [calendarData, setCalendarData] = useState<CalendarData[]>([])
   const [threshold, setThreshold] = useState<number>(3)
   const [levelCounts, setLevelCounts] = useState<{ [key: number]: number }>({ 0: 0, 1: 0, 2: 0, 3: 0, 4: 0 })
@@ -116,7 +117,7 @@ export default function Calendar() {
         setCalendarData(transformedData)
       }
     })
-  }, [threshold])
+  }, [threshold, today])
 
   const transformCalendarData = (data: CalendarStorageData) => {
     const levelCount: { [key: number]: number } = { 0: 0, 1: 0, 2: 0, 3: 0, 4: 0 }
@@ -168,8 +169,8 @@ export default function Calendar() {
         <Container>
           <ContributionCalendar
             data={calendarData}
-            start={getDaysBefore(100)}
-            end={formatDate()}
+            start={getDaysBefore(100, today)}
+            end={today}
             cx={14}
             cy={14}
             theme={'emoji_negative'}

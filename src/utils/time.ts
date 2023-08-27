@@ -7,7 +7,8 @@
  * formatDate()
  */
 export const formatDate = (date: Date = new Date()): string => {
-  return new Date(date.getTime()).toISOString().split('T')[0]
+  const localTime = new Date(date.getTime()).toLocaleDateString().split('/')
+  return `${localTime[2]}-${String(localTime[0].padStart(2, '0'))}-${String(localTime[1].padStart(2, '0'))}`
 }
 
 /**
@@ -58,7 +59,7 @@ export const getPast7Days = (today: string): string[] => {
   for (let i = 0; i < 7; ++i) {
     const tempDate = new Date(date)
     tempDate.setDate(date.getDate() - i)
-    past7Days.unshift(tempDate.toISOString().split('T')[0])
+    past7Days.unshift(formatDate(tempDate))
   }
 
   return past7Days
@@ -73,7 +74,7 @@ export const getPast7Days = (today: string): string[] => {
  */
 export const getPast7Dates = (): string[] => {
   const DATES = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
-  const past7Days = getPast7Days(new Date().toISOString().split('T')[0])
+  const past7Days = getPast7Days(formatDate())
   const past7Dates = []
 
   for (let i = 0; i < 7; ++i) {
