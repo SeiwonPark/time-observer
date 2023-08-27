@@ -87,3 +87,19 @@ interface TimeNotification {
 interface WeeklyTimeNotification {
   [key: string]: TimeNotification[]
 }
+
+/**
+ * This represents calendar storage data format.
+ */
+interface CalendarStorageData {
+  [key: string]: number
+}
+
+/**
+ * This represents data for each calendar cell.
+ */
+interface CalendarData {
+  [key: string]: {
+    level: number
+  }
+}

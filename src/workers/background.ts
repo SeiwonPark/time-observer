@@ -3,8 +3,9 @@ import { formatDate, getDateDifference, getDomainNameFromUrl, handleDatesQueue }
 const DEFAULT_ICON = '/default.png'
 const NOTIFICATION_INTERVAL = 3600 // seconds
 let checkInterval: NodeJS.Timeout | null = null
-let calendar: { [date: string]: number } = {}
+let calendar: CalendarStorageData = {}
 const datesQueue: string[] = []
+const placeholderData: CalendarStorageData = {}
 
 /**
  * Initail chrome notification doesn't seem to work at initial operation if current
@@ -30,10 +31,22 @@ chrome.storage.local.set({
     },
   ],
 })
-
 chrome.storage.local.get('calendar', (data) => {
   if (data.calendar) {
     calendar = data.calendar
+  } else {
+    const today = new Date()
+
+    for (let i = 0; i <= 100; ++i) {
+      const currentDate = new Date(today)
+      currentDate.setDate(today.getDate() - i)
+
+      const formattedDate = formatDate(currentDate)
+      placeholderData[formattedDate] = 0
+    }
+
+    chrome.storage.local.set({ calendar: placeholderData })
+    calendar = placeholderData
   }
 })
 
@@ -148,7 +161,6 @@ async function saveTime(domain: string, favicon: string, second: number): Promis
 
 /**
  * Updates the calendar data with the given date and time spent.
- *
  * @param {string} date - The date for which to update the time spent.
  * @param {number} timeSpent - The time spent on the date.
  */
