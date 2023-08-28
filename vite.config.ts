@@ -38,19 +38,6 @@ export default defineConfig({
     manifest: true,
     sourcemap: true,
   },
-  /**
-   * _NOTE_: Background service worker runs only inside the chrome extension but not in the browser.
-   */
-  server: {
-    open: true,
-    port: 3000,
-    host: true,
-  },
-  css: {
-    postcss: {
-      plugins: [],
-    },
-  },
   test: {
     globals: true,
     environment: 'happy-dom',
