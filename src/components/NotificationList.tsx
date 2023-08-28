@@ -27,6 +27,10 @@ const EditText = styled.span`
   font-size: 14px;
   font-weight: 400;
   color: #999999;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -webkit-user-drag: none;
 `
 
 const CardList = styled.ul`
@@ -60,6 +64,9 @@ const CloseButton = styled(Close)`
 
 const Favicon = styled.img`
   padding: 10px;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
 `
 
 const CardContent = styled.div`
@@ -81,6 +88,10 @@ const Domain = styled.span`
   font-size: 12px;
   font-weight: 700;
   padding: 4px;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -webkit-user-drag: none;
 `
 
 const Badge = styled.div`
@@ -93,6 +104,10 @@ const Badge = styled.div`
   color: #636363;
   font-size: 12px;
   background-color: #f5f5f5;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -webkit-user-drag: none;
 `
 
 const Spacer = styled.div`
