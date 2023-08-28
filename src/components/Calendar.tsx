@@ -15,7 +15,6 @@ const TitleContainer = styled.div`
 
 const Title = styled.h3`
   user-select: none;
-  user-drag: none;
   -moz-user-select: none;
   -webkit-user-select: none;
   -webkit-user-drag: none;
@@ -93,7 +92,6 @@ const SlotText = styled.span`
   font-size: 20px;
   font-weight: bold;
   user-select: none;
-  user-drag: none;
   -moz-user-select: none;
   -webkit-user-select: none;
   -webkit-user-drag: none;
@@ -108,7 +106,6 @@ const EmojiGroup = styled.ul`
 const Emoji = styled.li`
   padding: 4px;
   user-select: none;
-  user-drag: none;
   -moz-user-select: none;
   -webkit-user-select: none;
   -webkit-user-drag: none;
