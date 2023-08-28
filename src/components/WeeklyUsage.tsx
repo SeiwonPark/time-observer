@@ -23,11 +23,17 @@ const Title = styled.span`
   font-weight: 600;
 `
 
+const Link = styled.a`
+  text-decoration: none;
+  cursor: pointer;
+`
+
 const Domain = styled.span`
   padding: 10px;
   word-wrap: break-word;
   font-size: 20px;
   font-weight: 500;
+  color: #2f87e5;
 `
 
 const Margin16 = styled.div`
@@ -157,6 +163,14 @@ export default function WeeklyUsage({ endpoint, today }: WeeklyUsageProps) {
     },
   }
 
+  const handleOpen = (domain: string) => {
+    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+      if (tabs[0].url) {
+        chrome.tabs.update({ url: `http://${domain}` })
+      }
+    })
+  }
+
   return (
     <>
       <Header>
@@ -166,7 +180,9 @@ export default function WeeklyUsage({ endpoint, today }: WeeklyUsageProps) {
         <Title>Weekly Usage</Title>
       </Header>
       <Margin16>
-        <Domain>{endpoint}</Domain>
+        <Link target="_blank" rel="noreferrer noopener" onClick={() => handleOpen(endpoint)}>
+          <Domain>{endpoint}</Domain>
+        </Link>
       </Margin16>
       <WidgetContainer>
         <Widget
