@@ -1,6 +1,6 @@
 # time-observer
 
-![Chrome Web Store Version](https://img.shields.io/chrome-web-store/v/pmjhjbicecnbnhnaaipggmodknhijmng?logo=google-chrome&logoColor=%23eee) ![GitHub](https://img.shields.io/github/license/encaffeine/time-observer)
+![Chrome Web Store Version](https://img.shields.io/chrome-web-store/v/pmjhjbicecnbnhnaaipggmodknhijmng?logo=google-chrome&logoColor=%23eee) 
 
 A simple Chrome extension that alerts you every hour and tracks the time you spend on each of Chrome's active tabs.
 
