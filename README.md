@@ -1,6 +1,6 @@
 # time-observer
 
-![Chrome Web Store Version](https://img.shields.io/chrome-web-store/v/pmjhjbicecnbnhnaaipggmodknhijmng?logo=google-chrome&logoColor=%23eee) ![](https://img.shields.io/github/license/encaffeine/time-observer)
+![Chrome Web Store Version](https://img.shields.io/chrome-web-store/v/pmjhjbicecnbnhnaaipggmodknhijmng?logo=google-chrome&logoColor=%23eee) ![GitHub](https://img.shields.io/github/license/encaffeine/time-observer)
 
 A simple Chrome extension that alerts you every hour and tracks the time you spend on each of Chrome's active tabs.
 
@@ -10,7 +10,7 @@ Available at [Chrome Web Store](https://chrome.google.com/webstore/detail/time-o
 <img width="500" src="./images/time-observer.png" alt="chrome-web-store" />
 </a>
 
-> **Info**  
+> **Note**  
 > We don't collect any single data from user's action. All data is stored in your Chrome's local storage.
 
 <br />
