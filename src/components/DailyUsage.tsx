@@ -52,14 +52,27 @@ const Domain = styled.div`
   overflow: hidden;
   text-overflow: ellipsis;
   line-height: 36px;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
 `
 
 const Pad2 = styled.div`
   padding: 2px;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
 `
 const Pad12 = styled.div`
   padding: 12px;
 `
+
+const Favicon = styled.img`
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+`
+
 const GrayBack = styled.div`
   background-color: ${COLORS.background};
   padding: 2px 8px;
@@ -132,7 +145,7 @@ export default function DailyUsage() {
         {sortedStorageData.map(([key, value]) => (
           <Card key={key} onClick={() => navigate(key, { state: today })}>
             <Pad12>
-              <img src={value.favicon} alt="favicon" width="24" height="24" />
+              <Favicon src={value.favicon} alt="favicon" width="24" height="24" />
             </Pad12>
             <CardRight>
               <Domain>{key}</Domain>
