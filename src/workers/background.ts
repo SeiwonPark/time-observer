@@ -1,5 +1,4 @@
-import { UPDATE_CALENDAR_INTERVAL } from 'constants/number'
-
+import { UPDATE_CALENDAR_INTERVAL } from '../constants/number'
 import { formatDate, getDateDifference, getDomainNameFromUrl, handleDatesQueue } from '../utils'
 
 const DEFAULT_ICON = '/default.png'
@@ -157,18 +156,17 @@ async function saveTime(domain: string, favicon: string, second: number): Promis
   }
 
   if (currentTimeSpent !== 0 && currentTimeSpent % UPDATE_CALENDAR_INTERVAL == 0) {
-    await updateCalendarData(today, second)
+    await updateCalendarData(today)
   }
 }
 
 /**
  * Updates the calendar data with the given date and time spent.
  * @param {string} date - The date for which to update the time spent.
- * @param {number} interval - The time spent on the date. (increments by every UPDATE_CALENDAR_INTERVALs)
  */
-async function updateCalendarData(date: string, interval: number): Promise<void> {
+async function updateCalendarData(date: string): Promise<void> {
   const prevTimeSpent = calendar[date] || 0
-  calendar[date] = prevTimeSpent + interval
+  calendar[date] = prevTimeSpent + UPDATE_CALENDAR_INTERVAL
 
   if (Object.keys(calendar).length > 100) {
     const earliestDate = Object.keys(calendar).sort()[0]

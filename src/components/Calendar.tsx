@@ -1,6 +1,6 @@
 import React, { useEffect, useState, MouseEvent } from 'react'
 
-import { UPDATE_CALENDAR_INTERVAL } from 'constants/number'
+import { UPDATE_CALENDAR_INTERVAL } from '../constants/number'
 import { ContributionCalendar } from 'react-contribution-calendar'
 import styled from 'styled-components'
 
