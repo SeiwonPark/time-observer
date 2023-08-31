@@ -137,13 +137,13 @@ export default function Calendar() {
 
     const transformedData = Object.keys(data).map((date: string) => {
       let level = 0
-      if (data[date] < threshold) {
+      if (data[date] === 0) {
         level = 0
-      } else if (data[date] < 2 * threshold) {
+      } else if (data[date] < 1 * threshold) {
         level = 1
-      } else if (data[date] < 3 * threshold) {
+      } else if (data[date] < 2 * threshold) {
         level = 2
-      } else if (data[date] < 4 * threshold) {
+      } else if (data[date] < 3 * threshold) {
         level = 3
       } else {
         level = 4
@@ -207,32 +207,30 @@ export default function Calendar() {
       <EmojiGroup>
         <Emoji>
           {THEME.level0}
-          <EmojiText>
-            Less than {threshold} hours, {Math.min(100, levelCounts[0])} days
-          </EmojiText>
+          <EmojiText>No data, {Math.min(100, levelCounts[0])} days</EmojiText>
         </Emoji>
         <Emoji>
           {THEME.level1}
           <EmojiText>
-            Less than {2 * threshold} hours, {levelCounts[1]} days
+            Less than {1 * threshold} hours, {levelCounts[1]} days
           </EmojiText>
         </Emoji>
         <Emoji>
           {THEME.level2}
           <EmojiText>
-            Less than {3 * threshold} hours, {levelCounts[2]} days
+            Less than {2 * threshold} hours, {levelCounts[2]} days
           </EmojiText>
         </Emoji>
         <Emoji>
           {THEME.level3}
           <EmojiText>
-            Less than {4 * threshold} hours, {levelCounts[3]} days
+            Less than {3 * threshold} hours, {levelCounts[3]} days
           </EmojiText>
         </Emoji>
         <Emoji>
           {THEME.level4}
           <EmojiText>
-            More than {4 * threshold} hours, {levelCounts[4]} days
+            More than {3 * threshold} hours, {levelCounts[4]} days
           </EmojiText>
         </Emoji>
       </EmojiGroup>

@@ -2,6 +2,7 @@ import { formatDate, getDateDifference, getDomainNameFromUrl, handleDatesQueue }
 
 const DEFAULT_ICON = '/default.png'
 const NOTIFICATION_INTERVAL = 3600 // seconds
+const UPDATE_CALENDAR_INTERVAL = 60 // seconds
 let checkInterval: NodeJS.Timeout | null = null
 let calendar: CalendarStorageData = {}
 const datesQueue: string[] = []
@@ -154,7 +155,7 @@ async function saveTime(domain: string, favicon: string, second: number): Promis
     await removeExpiredNotification()
   }
 
-  if (currentTimeSpent !== 0 && currentTimeSpent % NOTIFICATION_INTERVAL == 0) {
+  if (currentTimeSpent !== 0 && currentTimeSpent % UPDATE_CALENDAR_INTERVAL == 0) {
     await updateCalendarData(today, second)
   }
 }
