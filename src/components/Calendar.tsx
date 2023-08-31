@@ -140,7 +140,6 @@ export default function Calendar() {
       if (data[date] === 0) {
         level = 0
       } else if (data[date] < 1 * threshold) {
-        console.log(data[date])
         level = 1
       } else if (data[date] < 2 * threshold) {
         level = 2
@@ -208,9 +207,7 @@ export default function Calendar() {
       <EmojiGroup>
         <Emoji>
           {THEME.level0}
-          <EmojiText>
-            Less than {threshold} hours, {Math.min(100, levelCounts[0])} days
-          </EmojiText>
+          <EmojiText>No data, {Math.min(100, levelCounts[0])} days</EmojiText>
         </Emoji>
         <Emoji>
           {THEME.level1}
