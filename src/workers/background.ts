@@ -164,11 +164,11 @@ async function saveTime(domain: string, favicon: string, second: number): Promis
 /**
  * Updates the calendar data with the given date and time spent.
  * @param {string} date - The date for which to update the time spent.
- * @param {number} timeSpent - The time spent on the date.
+ * @param {number} interval - The time spent on the date. (increments by every UPDATE_CALENDAR_INTERVALs)
  */
-async function updateCalendarData(date: string, timeSpent: number): Promise<void> {
+async function updateCalendarData(date: string, interval: number): Promise<void> {
   const prevTimeSpent = calendar[date] || 0
-  calendar[date] = prevTimeSpent + timeSpent
+  calendar[date] = prevTimeSpent + interval
 
   if (Object.keys(calendar).length > 100) {
     const earliestDate = Object.keys(calendar).sort()[0]
