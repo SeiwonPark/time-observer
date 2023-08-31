@@ -1,5 +1,6 @@
 import React, { useEffect, useState, MouseEvent } from 'react'
 
+import { UPDATE_CALENDAR_INTERVAL } from 'constants/number'
 import { ContributionCalendar } from 'react-contribution-calendar'
 import styled from 'styled-components'
 
@@ -139,11 +140,11 @@ export default function Calendar() {
       let level = 0
       if (data[date] === 0) {
         level = 0
-      } else if (data[date] < 1 * threshold) {
+      } else if (data[date] < 1 * UPDATE_CALENDAR_INTERVAL * threshold) {
         level = 1
-      } else if (data[date] < 2 * threshold) {
+      } else if (data[date] < 2 * UPDATE_CALENDAR_INTERVAL * threshold) {
         level = 2
-      } else if (data[date] < 3 * threshold) {
+      } else if (data[date] < 3 * UPDATE_CALENDAR_INTERVAL * threshold) {
         level = 3
       } else {
         level = 4

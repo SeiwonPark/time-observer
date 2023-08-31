@@ -1,8 +1,9 @@
+import { UPDATE_CALENDAR_INTERVAL } from 'constants/number'
+
 import { formatDate, getDateDifference, getDomainNameFromUrl, handleDatesQueue } from '../utils'
 
 const DEFAULT_ICON = '/default.png'
 const NOTIFICATION_INTERVAL = 3600 // seconds
-const UPDATE_CALENDAR_INTERVAL = 60 // seconds
 let checkInterval: NodeJS.Timeout | null = null
 let calendar: CalendarStorageData = {}
 const datesQueue: string[] = []
