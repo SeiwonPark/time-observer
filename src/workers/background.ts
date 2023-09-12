@@ -38,7 +38,7 @@ chrome.storage.local.get('calendar', (data) => {
   } else {
     const today = new Date()
 
-    for (let i = 0; i <= 100; ++i) {
+    for (let i = 0; i < 100; ++i) {
       const currentDate = new Date(today)
       currentDate.setDate(today.getDate() - i)
 
