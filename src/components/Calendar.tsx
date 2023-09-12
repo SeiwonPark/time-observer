@@ -1,11 +1,11 @@
 import React, { useEffect, useState, MouseEvent } from 'react'
 
-import { UPDATE_CALENDAR_INTERVAL } from '../constants/number'
 import { ContributionCalendar } from 'react-contribution-calendar'
 import styled from 'styled-components'
 
 import SlotBottom from '../assets/slot_bottom.svg'
 import SlotTop from '../assets/slot_top.svg'
+import { UPDATE_CALENDAR_INTERVAL } from '../constants/number'
 import { formatDate, getDaysBefore } from '../utils'
 
 const TitleContainer = styled.div`
@@ -118,7 +118,7 @@ const EmojiText = styled.span`
 `
 
 export default function Calendar() {
-  const THEME = { level0: '🫥', level1: '😃', level2: '🙂', level3: '😕', level4: '😢' }
+  const THEME = { level0: '😶', level1: '😃', level2: '🙂', level3: '😞', level4: '😭' }
   const today = formatDate()
   const [calendarData, setCalendarData] = useState<CalendarData[]>([])
   const [threshold, setThreshold] = useState<number>(3)
@@ -187,7 +187,14 @@ export default function Calendar() {
             end={today}
             cx={14}
             cy={14}
-            theme={'emoji_negative'}
+            theme={{
+              isTextTheme: true,
+              level0: THEME.level0,
+              level1: THEME.level1,
+              level2: THEME.level2,
+              level3: THEME.level3,
+              level4: THEME.level4,
+            }}
           />
         </Container>
       </Wrapper>
