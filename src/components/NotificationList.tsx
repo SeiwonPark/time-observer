@@ -160,6 +160,11 @@ export default function NotificationList() {
     })
   }
 
+  const getLatestDate = () => {
+    const dates = Object.keys(groupedNotifications)
+    return dates.length ? dates.reduce((a, b) => (a > b ? a : b)) : null
+  }
+
   return (
     <>
       {Object.keys(groupedNotifications).length === 0 ? (
@@ -173,9 +178,9 @@ export default function NotificationList() {
             if (dayNotifications && dayNotifications.length > 0) {
               return (
                 <CardList key={index}>
-                  {day === today ? (
+                  {day === today || day === getLatestDate() ? (
                     <TitleContainer>
-                      <DateTitle>Today</DateTitle>
+                      <DateTitle>{day === today ? 'Today' : `Last ${getFullDateString(day)}`}</DateTitle>
                       <EditText>Edit</EditText>
                       <ToggleButton toggle={setToggled} />
                     </TitleContainer>
