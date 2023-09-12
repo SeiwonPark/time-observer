@@ -1,8 +1,8 @@
 import { UPDATE_CALENDAR_INTERVAL } from '../constants/number'
+import { NOTIFICATION_INTERVAL } from '../constants/number'
 import { formatDate, getDateDifference, getDomainNameFromUrl, handleDatesQueue } from '../utils'
 
 const DEFAULT_ICON = '/default.png'
-const NOTIFICATION_INTERVAL = 3600 // seconds
 let checkInterval: NodeJS.Timeout | null = null
 let calendar: CalendarStorageData = {}
 const datesQueue: string[] = []
@@ -38,7 +38,7 @@ chrome.storage.local.get('calendar', (data) => {
   } else {
     const today = new Date()
 
-    for (let i = 0; i <= 100; ++i) {
+    for (let i = 0; i < 100; ++i) {
       const currentDate = new Date(today)
       currentDate.setDate(today.getDate() - i)
 
