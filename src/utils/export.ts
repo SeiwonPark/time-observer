@@ -1,10 +1,10 @@
 function convertDailyDataToCSV(data: DailyStorageList): string {
-  const header = 'URL,Date,Time Spent(minutes),Favicon'
+  const header = 'URL,Time Spent(minutes)'
 
   // Convert each item into a CSV row
   const csvRows = Object.entries(data).map(([key, item]) => {
-    const { date = '', timeSpent, favicon } = item
-    return `${key},${date},${timeSpent},${favicon}`
+    const { date = '', timeSpent } = item
+    return `${key},${timeSpent}`
   })
   return [header, ...csvRows].join('\n')
 }
