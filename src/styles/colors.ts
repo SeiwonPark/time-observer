@@ -4,6 +4,7 @@ export const COLORS = {
   violet: '#3D4ABA',
   green: '#07E092',
   black: '#070417',
+  gray: '#636363',
   white: '#FFFFFF',
   background: '#F5F5F5',
   box_shadow01: 'rgba(0, 0, 0, 0.2) 0px 0px 5px 0px, rgba(0, 0, 0, 0.1) 0px 0px 1px 0px',

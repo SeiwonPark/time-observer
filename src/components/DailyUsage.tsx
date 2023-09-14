@@ -3,9 +3,12 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 
+import IconExport from '../assets/export.svg'
 import IconStopWatch from '../assets/stopwatch.svg'
 import { COLORS } from '../styles/colors'
 import { formatDate, sortByTimeSpent, formatTime, getDomainNameFromUrl } from '../utils'
+import { downloadDailyDataCSV } from '../utils/export'
+import { Button } from './Button'
 
 const CardList = styled.ul`
   list-style-type: none;
@@ -90,10 +93,18 @@ const TimeSpent = styled.span`
   align-items: center;
   flex-direction: row;
 `
+
 const Spacer = styled.div`
   width: 100%;
   height: 80px;
 `
+
+const ListTitle = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`
+
 export default function DailyUsage() {
   const [currentDomain, setCurrentDomain] = useState<string>()
   const [storageData, setStorageData] = useState<DailyStorageList>({})
@@ -140,7 +151,19 @@ export default function DailyUsage() {
         <CurrentTime>{currentDomain ? formatTime(storageData[currentDomain]?.timeSpent) : 0}</CurrentTime>
         <CurrentDomain>{currentDomain}</CurrentDomain>
       </BlackCard>
-      <h2>Today</h2>
+      <ListTitle>
+        <h2>Today</h2>
+        <Button
+          fontSize="10px"
+          bgColor="transparent"
+          borderColor={COLORS.gray}
+          onClick={() => {
+            downloadDailyDataCSV(storageData, 'time-observer.csv')
+          }}
+        >
+          <IconExport color={COLORS.gray} />
+        </Button>
+      </ListTitle>
       <CardList>
         {sortedStorageData.map(([key, value]) => (
           <Card key={key} onClick={() => navigate(key, { state: today })}>
