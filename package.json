@@ -1,6 +1,6 @@
 {
   "name": "time-observer",
-  "version": "1.1.4",
+  "version": "1.2.0",
   "description": "A notifier for web usages",
   "main": "dist/index.js",
   "type": "module",
