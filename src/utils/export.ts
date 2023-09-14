@@ -1,3 +1,8 @@
+/**
+ * Convert DailyStorageList data to CSV.
+ * @param {DailyStorageList} data - Time spent data for each URL object
+ * @returns {string} CSV Formatted data
+ */
 function convertDailyDataToCSV(data: DailyStorageList): string {
   const header = 'URL,Time Spent(minutes)'
 
@@ -9,6 +14,11 @@ function convertDailyDataToCSV(data: DailyStorageList): string {
   return [header, ...csvRows].join('\n')
 }
 
+/**
+ * Download DailyStorageList data by CSV.
+ * @param {DailyStorageList} data - Time spent data for each URL object
+ * @param {filename} string - Filename for download
+ */
 export function downloadDailyDataCSV(data: DailyStorageList, filename: string): void {
   if (!data) {
     console.error('No LogData')
