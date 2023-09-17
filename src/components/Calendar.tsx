@@ -185,8 +185,8 @@ export default function Calendar() {
             data={calendarData}
             start={getDaysBefore(100, today)}
             end={today}
-            cx={14}
-            cy={14}
+            cx={12}
+            cy={12}
             theme={{
               isTextTheme: true,
               level0: THEME.level0,
