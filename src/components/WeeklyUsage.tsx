@@ -52,7 +52,7 @@ const WidgetContainer = styled.div`
   align-items: center;
   justify-content: center;
   gap: 3%;
-  margin: 20px 0 20px 0;
+  margin: 20px 0;
 `
 
 interface WeeklyUsageProps {

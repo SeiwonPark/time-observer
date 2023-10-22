@@ -27,7 +27,7 @@ const Wrapper = styled.div`
 `
 
 const Container = styled.div`
-  padding: 10px 15px 20px 5px;
+  padding: 8px 0px;
 
   ::-webkit-scrollbar {
     width: 20px;
@@ -60,7 +60,7 @@ const Slot = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  margin: 0 12px 0 12px;
+  margin: 0 12px;
   padding: 12px;
   border-radius: 12px;
   background-color: #fff;
@@ -185,8 +185,8 @@ export default function Calendar() {
             data={calendarData}
             start={getDaysBefore(100, today)}
             end={today}
-            cx={12}
-            cy={12}
+            cx={11}
+            cy={11}
             theme={{
               isTextTheme: true,
               level0: THEME.level0,
