@@ -7,7 +7,6 @@ import { createGlobalStyle } from 'styled-components'
 import { COLORS } from './colors'
 
 export const GlobalStyle = createGlobalStyle`
-  
   @import url('https://fonts.googleapis.com/css2?family=Rubik&display=swap');
 
   body {
@@ -15,7 +14,6 @@ export const GlobalStyle = createGlobalStyle`
     padding: 0;
     font-family: 'Rubik', sans-serif;
     background-color: ${COLORS.background};
-
   }
 
   /* Scrollbar Style */

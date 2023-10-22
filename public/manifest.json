@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "time-observer",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "A notifier for web usages",
   "icons": {
     "16": "icons/icon16.png",
