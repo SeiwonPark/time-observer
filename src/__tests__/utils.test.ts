@@ -87,14 +87,14 @@ describe('Utils Test', () => {
   it("handleDatesQueue pushes today's date to queue if it doesn't exist", () => {
     const datesQueue = ['2023-01-01', '2023-01-02', '2023-01-03']
     const today = formatDate()
-    handleDatesQueue(today, datesQueue)
+    handleDatesQueue(today, datesQueue, 7)
     expect(datesQueue).toContain(today)
   })
 
   it("handleDatesQueue doesn't push today's date to queue if it already exists", () => {
     const datesQueue = ['2023-01-01', '2023-01-02', '2023-01-03']
     const today = formatDate()
-    handleDatesQueue(today, datesQueue)
+    handleDatesQueue(today, datesQueue, 7)
     expect(datesQueue.filter((date) => date === today).length).toBe(1)
   })
 
@@ -110,7 +110,7 @@ describe('Utils Test', () => {
     ]
     const today = formatDate()
     const oldestDate = datesQueue[0]
-    const expiredDate = handleDatesQueue(today, datesQueue)
+    const expiredDate = handleDatesQueue(today, datesQueue, 7)
     expect(expiredDate).toBe(oldestDate)
     expect(datesQueue).not.toContain(oldestDate)
   })
@@ -118,7 +118,7 @@ describe('Utils Test', () => {
   it("handleDatesQueue doesn't remove any date when the length of queue is not greater than 7", () => {
     const datesQueue = ['2023-07-01', '2023-07-02', '2023-07-03', '2023-07-04', '2023-07-05', '2023-07-06']
     const today = formatDate()
-    const expiredDate = handleDatesQueue(today, datesQueue)
+    const expiredDate = handleDatesQueue(today, datesQueue, 7)
     expect(expiredDate).toBe('')
   })
 })
