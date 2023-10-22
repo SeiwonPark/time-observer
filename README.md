@@ -4,7 +4,10 @@
 
 A simple Chrome extension that alerts you every hour and tracks the time you spend on each of Chrome's active tabs.
 
-Available at [Chrome Web Store](https://chrome.google.com/webstore/detail/time-observer/nmibmaaddiapdodcdgijdnhenafapfjo)
+Available at
+
+- [Chrome Web Store](https://chrome.google.com/webstore/detail/time-observer/nmibmaaddiapdodcdgijdnhenafapfjo)
+- [Whale Store](https://store.whale.naver.com/detail/hehdhfeefgghfniacncmlfdnbhkpbifo)
 
 <a href="https://chrome.google.com/webstore/detail/time-observer/nmibmaaddiapdodcdgijdnhenafapfjo">
 <img width="500" src="./images/time-observer.png" alt="chrome-web-store" />
